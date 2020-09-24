@@ -1,0 +1,27 @@
+{
+    "name": "sun/belassist",
+    "description": "Bel Assist Service",
+    "authors": [
+        {
+            "name": "Kudryavtsev Sergey",
+            "email": "invaderman@mail.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Sun\\BelAssist\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sun\\BelAssist\\BelAssistServiceProvider"
+            ],
+            "aliases": {
+                "BelAssist": "Sun\\BelAssist\\Facade"
+            }
+        }
+    }
+}
