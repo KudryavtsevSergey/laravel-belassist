@@ -3,7 +3,9 @@
 namespace Sun\BelAssist;
 
 use Illuminate\Http\Response;
-use Sun\BelAssist\Models\BelAssistPayModel;
+use Illuminate\Support\Facades\Route;
+use Sun\BelAssist\Requests\BelAssistPayment;
+use Sun\BelAssist\Models\OrderStateModel;
 
 class BelAssist
 {
@@ -16,28 +18,41 @@ class BelAssist
         $this->config = $config;
     }
 
-    public function pay(BelAssistPayModel $belAssistPayModel): Response
+    public function pay(BelAssistPayment $belAssistPayment): Response
     {
         return response()->view('belassist::payment', [
+            'gateway' => $this->config->getGateway(),
             'merchantId' => $this->config->getMerchantId(),
-            'order' => $belAssistPayModel->getOrder(),
-            'delay' => $belAssistPayModel->getDelay(),
-            'language' => $belAssistPayModel->getLanguage(),
-            'amount' => $belAssistPayModel->getAmount(),
-            'currency' => $belAssistPayModel->getCurrency(),
-            'lastname' => $belAssistPayModel->getLastname(),
-            'name' => $belAssistPayModel->getName(),
-            'email' => $belAssistPayModel->getEmail(),
-            'phone' => $belAssistPayModel->getPhone(),
-            'urlReturn' => $belAssistPayModel->getUrlReturn(),
+            'order' => $belAssistPayment->getOrder(),
+            'delay' => $belAssistPayment->getDelay(),
+            'language' => $belAssistPayment->getLanguage(),
+            'amount' => $belAssistPayment->getFormattedAmount(),
+            'currency' => $belAssistPayment->getCurrency(),
+            'lastname' => $belAssistPayment->getLastname(),
+            'name' => $belAssistPayment->getName(),
+            'email' => $belAssistPayment->getEmail(),
+            'phone' => $belAssistPayment->getPhone(),
+            'urlReturn' => $belAssistPayment->getUrlReturn(),
         ]);
     }
 
-    public function orderState($id): array
+    public function orderState(string $id): OrderStateModel
     {
-        return $this->httpClient->request('orderstate/orderstate.cfm', [
-            'Format' => 3,
+        $response = $this->httpClient->request('orderstate/orderstate.cfm', [
             'Ordernumber' => $id
         ]);
+
+        return OrderStateModel::createFromArray($response);
+    }
+
+    public function routes(array $options = [])
+    {
+        $defaultOptions = ['prefix' => 'belassist', 'namespace' => '\Sun\BelAssist\Http\Controllers'];
+
+        $options = array_merge($defaultOptions, $options);
+
+        Route::group($options, function ($router) {
+            (new RouteRegistrar($router))->routes();
+        });
     }
 }

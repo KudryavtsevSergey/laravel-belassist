@@ -8,6 +8,8 @@ class BelAssistServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'belassist');
+
         $this->publishes([
             __DIR__ . '/../config/belassist.php' => config_path('belassist.php')
         ], 'belassist-config');

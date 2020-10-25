@@ -1,15 +1,13 @@
 <?php
 
-namespace Sun\BelAssist;
-
-use Sun\BelAssist\Enum\AbstractEnum;
+namespace Sun\BelAssist\Enum;
 
 class BelAssistCurrencyEnum extends AbstractEnum
 {
     const RUB = 'RUB';
     const USD = 'USD';
     const EUR = 'EUR';
-    const BYR = 'BYR';
+    const BYN = 'BYN';
 
     public static function getValues(): array
     {
@@ -17,7 +15,7 @@ class BelAssistCurrencyEnum extends AbstractEnum
             self::RUB,
             self::USD,
             self::EUR,
-            self::BYR,
+            self::BYN,
         ];
     }
 }

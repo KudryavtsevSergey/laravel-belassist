@@ -1,4 +1,4 @@
-<form id="payment" action="https://pay169.paysec.by/pay/order.cfm" method="post" style="display: none;">
+<form id="payment" action="{{ sprintf('%s/pay/order.cfm', $gateway) }}" method="post">
     <input type="hidden" name="Merchant_ID" value="{{ $merchantId }}" />
     <input type="hidden" name="OrderNumber" value="{{ $order  }}" />
     <input type="hidden" name="Delay" value="{{ $delay  }}" />
@@ -12,6 +12,8 @@
     <input type="hidden" name="MobilePhone" value="{{ $phone }}" />
 
     <input type="hidden" name="URL_RETURN" value="{{ $urlReturn }}" />
+
+    <input type="submit" value="Pay" />
 </form>
 
 <script>

@@ -2,7 +2,7 @@
 
 namespace Sun\BelAssist;
 
-use SimpleXMLElement;
+use Http;
 
 class BelAssistHttpClient
 {
@@ -19,26 +19,21 @@ class BelAssistHttpClient
             'Merchant_ID' => $this->config->getMerchantId(),
             'Login' => $this->config->getUsername(),
             'Password' => $this->config->getPassword(),
+            'Format' => 3,
         ]);
 
         $url = sprintf('%s/%s', $this->config->getGateway(), $method);
 
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => http_build_query($data),
+        $response = Http::post($url, [
+            $data,
         ]);
-        $response = curl_exec($curl);
-        $response = $this->encodeResponse($response);
-        curl_close($curl);
-        return $response;
+
+        $body = $response->body();
+        return $this->encodeResponse($body);
     }
 
     private function encodeResponse($response): array
     {
-        $response = new SimpleXMLElement($response);
-        return (array)$response;
+        return json_decode(json_encode((array)simplexml_load_string($response)), true);
     }
 }

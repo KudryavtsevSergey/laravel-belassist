@@ -1,39 +1,51 @@
 <?php
 
-namespace Sun\BelAssist\Models;
+namespace Sun\BelAssist\Requests;
 
-class BelAssistPayModel
+use Sun\BelAssist\Enum\BelAssistCurrencyEnum;
+use Sun\BelAssist\Contracts\BelAssistAmountContract;
+use Sun\BelAssist\Enum\BelAssistDelayEnum;
+use Sun\BelAssist\Enum\BelAssistLanguageEnum;
+
+class BelAssistPayment
 {
-    private ?string $order;
-    private ?string $delay;
-    private ?string $language;
-    private ?string $amount;
-    private ?string $currency;
-    private ?string $lastname;
-    private ?string $name;
-    private ?string $email;
-    private ?string $phone;
-    private ?string $urlReturn;
+    private string $order;
+    private int $delay = BelAssistDelayEnum::ONE_STAGE;
+    private ?string $language = BelAssistLanguageEnum::RUSSIAN;
+    private float $amount;
+    private string $currency = BelAssistCurrencyEnum::BYN;
+    private ?string $lastname = null;
+    private ?string $name = null;
+    private ?string $email = null;
+    private ?string $phone = null;
+    private ?string $urlReturn = null;
 
-    public function getOrder(): ?string
+    public function __construct(string $order, BelAssistAmountContract $amount)
+    {
+        $this->order = $order;
+        $this->amount = $amount->getAmount();
+        $this->setCurrency($amount->getBelAssistCurrency());
+    }
+
+    public function getOrder(): string
     {
         return $this->order;
     }
 
-    public function setOrder(?string $order): self
+    public function setOrder(string $order): self
     {
         $this->order = $order;
         return $this;
     }
 
-    public function getDelay(): ?string
+    public function getDelay(): ?int
     {
         return $this->delay;
     }
 
-    public function setDelay(?string $delay): self
+    public function setDelay(?int $delay): self
     {
-        $this->delay = $delay;
+        $this->delay = $delay ?? BelAssistDelayEnum::ONE_STAGE;
         return $this;
     }
 
@@ -48,25 +60,25 @@ class BelAssistPayModel
         return $this;
     }
 
-    public function getAmount(): ?string
+    public function getAmount(): float
     {
         return $this->amount;
     }
 
-    public function setAmount(?string $amount): self
+    public function setAmount(float $amount): self
     {
         $this->amount = $amount;
         return $this;
     }
 
-    public function getCurrency(): ?string
+    public function getCurrency(): string
     {
         return $this->currency;
     }
 
     public function setCurrency(?string $currency): self
     {
-        $this->currency = $currency;
+        $this->currency = $currency ?? BelAssistCurrencyEnum::BYN;
         return $this;
     }
 
@@ -123,5 +135,10 @@ class BelAssistPayModel
     {
         $this->urlReturn = $urlReturn;
         return $this;
+    }
+
+    public function getFormattedAmount(): float
+    {
+        return number_format($this->amount, '2', '.', '');
     }
 }

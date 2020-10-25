@@ -23,4 +23,9 @@ class BelAssistConfig
     {
         return config('belassist.password');
     }
+
+    public function getRequestCode(): ?string
+    {
+        return config('belassist.request_code');
+    }
 }
