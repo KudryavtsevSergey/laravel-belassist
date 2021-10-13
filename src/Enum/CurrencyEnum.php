@@ -2,7 +2,7 @@
 
 namespace Sun\BelAssist\Enum;
 
-class BelAssistCurrencyEnum extends AbstractEnum
+class CurrencyEnum extends AbstractEnum
 {
     const RUB = 'RUB';
     const USD = 'USD';

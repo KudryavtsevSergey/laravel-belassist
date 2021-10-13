@@ -2,7 +2,7 @@
 
 namespace Sun\BelAssist\Enum;
 
-class BelAssistLanguageEnum extends AbstractEnum
+class LanguageEnum extends AbstractEnum
 {
     const RUSSIAN = 'RU';
     const ENGLISH = 'EN';

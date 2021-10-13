@@ -18,12 +18,6 @@ class VerifyBelAssistAuthCode
         $this->config = $config;
     }
 
-    /**
-     * @param Request $request
-     * @param Closure $next
-     * @return mixed
-     * @throws WrongBelAssistAuthCodeException
-     */
     public function handle(Request $request, Closure $next)
     {
         $authCode = $request->get(self::BEL_ASSIST_REQUEST_CODE);

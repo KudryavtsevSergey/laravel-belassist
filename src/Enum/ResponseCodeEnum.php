@@ -2,7 +2,7 @@
 
 namespace Sun\BelAssist\Enum;
 
-class BelAssistResponseCodeEnum extends AbstractEnum
+class ResponseCodeEnum extends AbstractEnum
 {
     const OPERATION_COMPLETED_SUCCESSFULLY = 'AS000';
     const AUTHORIZATION_REFUSAL = 'AS100';

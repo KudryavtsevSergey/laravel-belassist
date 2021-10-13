@@ -18,12 +18,6 @@ class VerifyBelAssistMerchantId
         $this->config = $config;
     }
 
-    /**
-     * @param Request $request
-     * @param Closure $next
-     * @return mixed
-     * @throws WrongBelAssistMerchantIdException
-     */
     public function handle(Request $request, Closure $next)
     {
         $merchantId = $request->get(self::REQUEST_MERCHANT_ID);

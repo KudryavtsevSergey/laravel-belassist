@@ -2,7 +2,7 @@
 
 namespace Sun\BelAssist\Enum;
 
-class BelAssistDelayEnum extends AbstractEnum
+class DelayEnum extends AbstractEnum
 {
     const ONE_STAGE = 1;
     const TWO_STAGE = 2;

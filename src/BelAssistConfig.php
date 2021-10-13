@@ -2,30 +2,39 @@
 
 namespace Sun\BelAssist;
 
+use Illuminate\Contracts\Config\Repository as Config;
+
 class BelAssistConfig
 {
+    private Config $config;
+
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
+    }
+
     public function getGateway(): ?string
     {
-        return config('belassist.gateway');
+        return $this->config->get('belassist.gateway');
     }
 
     public function getMerchantId(): ?string
     {
-        return config('belassist.merchant_id');
+        return $this->config->get('belassist.merchant_id');
     }
 
     public function getUsername(): ?string
     {
-        return config('belassist.username');
+        return $this->config->get('belassist.username');
     }
 
     public function getPassword(): ?string
     {
-        return config('belassist.password');
+        return $this->config->get('belassist.password');
     }
 
     public function getRequestCode(): ?string
     {
-        return config('belassist.request_code');
+        return $this->config->get('belassist.request_code');
     }
 }

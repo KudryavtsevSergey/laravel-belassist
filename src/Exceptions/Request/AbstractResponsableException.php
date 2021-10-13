@@ -2,17 +2,15 @@
 
 namespace Sun\BelAssist\Exceptions\Request;
 
-use Exception;
-use Illuminate\Contracts\Support\Responsable;
+use Sun\BelAssist\Exceptions\InternalError;
 use Sun\BelAssist\ResponseGenerators\FailureResponseGenerator;
 use Sun\BelAssist\Responses\BelAssistResponse;
 
-abstract class AbstractResponsableException extends Exception implements Responsable
+abstract class AbstractResponsableException extends InternalError implements ResponsableThrowable
 {
-    public function toResponse($request)
+    public function toResponse($request): BelAssistResponse
     {
         $generator = new FailureResponseGenerator($this->getFirstResponseCode(), $this->getSecondResponseCode());
-
         return new BelAssistResponse($generator);
     }
 

@@ -3,8 +3,8 @@
 namespace Sun\BelAssist\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\Response;
 use Sun\BelAssist\ResponseGenerators\AbstractResponseGenerator;
-use Symfony\Component\HttpFoundation\Response;
 
 class BelAssistResponse implements Responsable
 {
@@ -19,7 +19,7 @@ class BelAssistResponse implements Responsable
     {
         $xml = $this->generator->generateXml();
 
-        return response($xml->asXML(), Response::HTTP_OK, [
+        return new Response($xml, Response::HTTP_OK, [
             'Content-Type' => 'application/xml',
         ]);
     }

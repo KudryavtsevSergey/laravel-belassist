@@ -2,22 +2,19 @@
 
 namespace Sun\BelAssist\Events;
 
-use Illuminate\Queue\SerializesModels;
-use Sun\BelAssist\Models\BelAssistPaymentModel;
+use Sun\BelAssist\Dto\ResponseDto\OrderPaymentDto;
 
 class BelAssistPaymentReceivedEvent
 {
-    use SerializesModels;
+    private OrderPaymentDto $orderPaymentDto;
 
-    private BelAssistPaymentModel $belAssistPaymentModel;
-
-    public function __construct(BelAssistPaymentModel $belAssistPaymentModel)
+    public function __construct(OrderPaymentDto $orderPaymentDto)
     {
-        $this->belAssistPaymentModel = $belAssistPaymentModel;
+        $this->orderPaymentDto = $orderPaymentDto;
     }
 
-    public function getBelAssistPaymentModel(): BelAssistPaymentModel
+    public function getOrderPaymentDto(): OrderPaymentDto
     {
-        return $this->belAssistPaymentModel;
+        return $this->orderPaymentDto;
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Sun\BelAssist\BelAssist;
 use Sun\BelAssist\Facade;
 
 if (!function_exists('belAssist')) {

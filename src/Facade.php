@@ -8,7 +8,7 @@ class Facade extends IlluminateFacade
 {
     const FACADE = 'BelAssist';
 
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return self::FACADE;
     }

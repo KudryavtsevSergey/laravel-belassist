@@ -2,8 +2,8 @@
 
 namespace Sun\BelAssist\Exceptions\Request;
 
-use Sun\BelAssist\Enum\BelAsssitFirstResponseCodeEnum;
-use Sun\BelAssist\Enum\BelAssistSecondResponseCodeEnum;
+use Sun\BelAssist\Enum\FirstResponseCodeEnum;
+use Sun\BelAssist\Enum\SecondResponseCodeEnum;
 
 class WrongBelAssistAuthCodeException extends AbstractResponsableException
 {
@@ -15,11 +15,11 @@ class WrongBelAssistAuthCodeException extends AbstractResponsableException
 
     protected function getFirstResponseCode(): int
     {
-        return BelAsssitFirstResponseCodeEnum::INVALID_PARAMETER_VALUE;
+        return FirstResponseCodeEnum::INVALID_PARAMETER_VALUE;
     }
 
     protected function getSecondResponseCode(): int
     {
-        return BelAssistSecondResponseCodeEnum::NO_ADDITIONAL_INFORMATION;
+        return SecondResponseCodeEnum::NO_ADDITIONAL_INFORMATION;
     }
 }

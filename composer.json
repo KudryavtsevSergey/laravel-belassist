@@ -1,30 +1,41 @@
 {
-    "name": "sun/belassist",
-    "description": "Bel Assist Service",
-    "authors": [
-        {
-            "name": "Kudryavtsev Sergey",
-            "email": "invaderman@mail.ru"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {},
-    "autoload": {
-        "files": [
-            "src/helpers.php"
-        ],
-        "psr-4": {
-            "Sun\\BelAssist\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Sun\\BelAssist\\BelAssistServiceProvider"
-            ],
-            "aliases": {
-                "BelAssist": "Sun\\BelAssist\\Facade"
-            }
-        }
+  "name": "sun/belassist",
+  "description": "Bel Assist Service",
+  "authors": [
+    {
+      "name": "Kudryavtsev Sergey",
+      "email": "invaderman@mail.ru"
     }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "ext-json": "*",
+    "ext-simplexml": "*",
+    "symfony/serializer": "5.3.8",
+    "symfony/property-access": "5.3.8",
+    "phpdocumentor/reflection-docblock": "5.2.2",
+    "illuminate/http": "8.63",
+    "illuminate/support": "8.63",
+    "illuminate/events": "8.63",
+    "illuminate/routing": "8.63",
+    "guzzlehttp/guzzle": "7.2"
+  },
+  "autoload": {
+    "files": [
+      "src/helpers.php"
+    ],
+    "psr-4": {
+      "Sun\\BelAssist\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Sun\\BelAssist\\BelAssistServiceProvider"
+      ],
+      "aliases": {
+        "BelAssist": "Sun\\BelAssist\\Facade"
+      }
+    }
+  }
 }

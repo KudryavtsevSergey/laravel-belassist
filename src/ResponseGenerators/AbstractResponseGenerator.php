@@ -3,6 +3,7 @@
 namespace Sun\BelAssist\ResponseGenerators;
 
 use SimpleXMLElement;
+use Sun\BelAssist\Exceptions\XmlGenerationException;
 
 abstract class AbstractResponseGenerator
 {
@@ -15,18 +16,22 @@ abstract class AbstractResponseGenerator
         $this->secondCode = $secondCode;
     }
 
-    public function generateXml(): SimpleXMLElement
+    public function generateXml(): string
+    {
+        $xml = $this->createXml();
+
+        $xmlResult = $xml->asXML();
+        if ($xmlResult === false) {
+            throw new XmlGenerationException();
+        }
+        return $xmlResult;
+    }
+
+    protected function createXml(): SimpleXMLElement
     {
         $xml = new SimpleXMLElement('<pushpaymentresult />');
         $xml->addAttribute('firstcode', $this->firstCode);
         $xml->addAttribute('secondcode', $this->secondCode);
-
-        $this->configureXml($xml);
-
         return $xml;
-    }
-
-    protected function configureXml(SimpleXMLElement $xml)
-    {
     }
 }

@@ -2,25 +2,27 @@
 
 namespace Sun\BelAssist;
 
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use Sun\BelAssist\Requests\BelAssistPayment;
-use Sun\BelAssist\Models\OrderStateModel;
 
 class BelAssist
 {
-    private BelAssistHttpClient $httpClient;
     private BelAssistConfig $config;
+    private ResponseFactory $response;
 
-    public function __construct(BelAssistHttpClient $httpClient, BelAssistConfig $config)
-    {
-        $this->httpClient = $httpClient;
+    public function __construct(
+        BelAssistConfig $config,
+        ResponseFactory $response
+    ) {
         $this->config = $config;
+        $this->response = $response;
     }
 
     public function pay(BelAssistPayment $belAssistPayment): Response
     {
-        return response()->view('belassist::payment', [
+        return $this->response->view('belassist::payment', [
             'gateway' => $this->config->getGateway(),
             'merchantId' => $this->config->getMerchantId(),
             'order' => $belAssistPayment->getOrder(),
@@ -36,22 +38,13 @@ class BelAssist
         ]);
     }
 
-    public function orderState(string $id): OrderStateModel
-    {
-        $response = $this->httpClient->request('orderstate/orderstate.cfm', [
-            'Ordernumber' => $id
-        ]);
-
-        return OrderStateModel::createFromArray($response);
-    }
-
     public function routes(array $options = [])
     {
         $defaultOptions = ['prefix' => 'belassist', 'namespace' => '\Sun\BelAssist\Http\Controllers'];
 
         $options = array_merge($defaultOptions, $options);
 
-        Route::group($options, function ($router) {
+        Route::group($options, function ($router): void {
             (new RouteRegistrar($router))->routes();
         });
     }

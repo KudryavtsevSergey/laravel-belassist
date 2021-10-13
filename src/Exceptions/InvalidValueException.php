@@ -2,9 +2,7 @@
 
 namespace Sun\BelAssist\Exceptions;
 
-use Exception;
-
-class InvalidValueException extends Exception
+class InvalidValueException extends InternalError
 {
     private $value;
     private array $allowedValues;

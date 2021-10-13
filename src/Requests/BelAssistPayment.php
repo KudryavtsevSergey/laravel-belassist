@@ -2,18 +2,18 @@
 
 namespace Sun\BelAssist\Requests;
 
-use Sun\BelAssist\Enum\BelAssistCurrencyEnum;
+use Sun\BelAssist\Enum\CurrencyEnum;
 use Sun\BelAssist\Contracts\BelAssistAmountContract;
-use Sun\BelAssist\Enum\BelAssistDelayEnum;
-use Sun\BelAssist\Enum\BelAssistLanguageEnum;
+use Sun\BelAssist\Enum\DelayEnum;
+use Sun\BelAssist\Enum\LanguageEnum;
 
 class BelAssistPayment
 {
     private string $order;
-    private int $delay = BelAssistDelayEnum::ONE_STAGE;
-    private ?string $language = BelAssistLanguageEnum::RUSSIAN;
+    private int $delay = DelayEnum::ONE_STAGE;
+    private ?string $language = null;
     private float $amount;
-    private string $currency = BelAssistCurrencyEnum::BYN;
+    private string $currency;
     private ?string $lastname = null;
     private ?string $name = null;
     private ?string $email = null;
@@ -22,9 +22,11 @@ class BelAssistPayment
 
     public function __construct(string $order, BelAssistAmountContract $amount)
     {
+        $currency = $amount->getBelAssistCurrency();
+        CurrencyEnum::checkAllowedValue($currency);
         $this->order = $order;
         $this->amount = $amount->getAmount();
-        $this->setCurrency($amount->getBelAssistCurrency());
+        $this->currency = $currency;
     }
 
     public function getOrder(): string
@@ -32,20 +34,15 @@ class BelAssistPayment
         return $this->order;
     }
 
-    public function setOrder(string $order): self
-    {
-        $this->order = $order;
-        return $this;
-    }
-
-    public function getDelay(): ?int
+    public function getDelay(): int
     {
         return $this->delay;
     }
 
-    public function setDelay(?int $delay): self
+    public function setDelay(int $delay): self
     {
-        $this->delay = $delay ?? BelAssistDelayEnum::ONE_STAGE;
+        DelayEnum::checkAllowedValue($delay);
+        $this->delay = $delay;
         return $this;
     }
 
@@ -56,6 +53,7 @@ class BelAssistPayment
 
     public function setLanguage(?string $language): self
     {
+        LanguageEnum::checkAllowedValue($language, true);
         $this->language = $language;
         return $this;
     }
@@ -65,21 +63,9 @@ class BelAssistPayment
         return $this->amount;
     }
 
-    public function setAmount(float $amount): self
-    {
-        $this->amount = $amount;
-        return $this;
-    }
-
     public function getCurrency(): string
     {
         return $this->currency;
-    }
-
-    public function setCurrency(?string $currency): self
-    {
-        $this->currency = $currency ?? BelAssistCurrencyEnum::BYN;
-        return $this;
     }
 
     public function getLastname(): ?string

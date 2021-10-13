@@ -2,7 +2,7 @@
 
 namespace Sun\BelAssist\Enum;
 
-class BelAssistSecondResponseCodeEnum extends AbstractEnum
+class SecondResponseCodeEnum extends AbstractEnum
 {
     const NO_ADDITIONAL_INFORMATION = 0;
     const UNEXPECTED_ERROR = 1;
