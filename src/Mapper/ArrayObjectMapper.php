@@ -9,7 +9,6 @@ use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -32,12 +31,11 @@ class ArrayObjectMapper
             [$reflectionExtractor],
             [$reflectionExtractor]
         );
-
         $normalizers = [
             new DateTimeNormalizer([
                 DateTimeNormalizer::FORMAT_KEY => 'd.m.Y H:i:s',
             ]),
-            new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter(), null, $propertyTypeExtractor),
+            new ObjectNormalizer(null, null, null, $propertyTypeExtractor),
             new ArrayDenormalizer(),
         ];
         $this->serializer = new Serializer($normalizers);

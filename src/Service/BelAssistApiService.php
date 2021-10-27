@@ -6,7 +6,7 @@ use Sun\BelAssist\Dto\RequestDto\OrderStateRequestDto;
 use Sun\BelAssist\Dto\ResponseDto\OrderStateResponseDto;
 use Sun\BelAssist\Enum\ApiEnum;
 
-class BelAssistService
+class BelAssistApiService
 {
     private BelAssistHttpClientService $httpClient;
 

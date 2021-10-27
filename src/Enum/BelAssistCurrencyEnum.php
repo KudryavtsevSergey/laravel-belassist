@@ -2,12 +2,12 @@
 
 namespace Sun\BelAssist\Enum;
 
-class CurrencyEnum extends AbstractEnum
+class BelAssistCurrencyEnum extends AbstractEnum
 {
-    const RUB = 'RUB';
-    const USD = 'USD';
-    const EUR = 'EUR';
-    const BYN = 'BYN';
+    public const RUB = 'RUB';
+    public const USD = 'USD';
+    public const EUR = 'EUR';
+    public const BYN = 'BYN';
 
     public static function getValues(): array
     {

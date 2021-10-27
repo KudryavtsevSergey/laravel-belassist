@@ -33,8 +33,8 @@ class BelAssistConfig
         return $this->config->get('belassist.password');
     }
 
-    public function getRequestCode(): ?string
+    public function getSalt(): ?string
     {
-        return $this->config->get('belassist.request_code');
+        return $this->config->get('belassist.salt');
     }
 }

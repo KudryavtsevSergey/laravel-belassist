@@ -2,40 +2,42 @@
 
 namespace Sun\BelAssist;
 
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
-use Sun\BelAssist\Requests\BelAssistPayment;
+use Sun\BelAssist\Dto\ResponseDto\BelAssistPaymentDto;
+use Sun\BelAssist\Http\Controllers\BelAssistPaymentController;
 
 class BelAssist
 {
-    private BelAssistConfig $config;
-    private ResponseFactory $response;
+    public static ?string $keyPath = null;
 
-    public function __construct(
-        BelAssistConfig $config,
-        ResponseFactory $response
-    ) {
-        $this->config = $config;
-        $this->response = $response;
+    public function pay(BelAssistPaymentDto $belAssistPaymentDto): RedirectResponse
+    {
+        return redirect(route(BelAssistPaymentController::PAY_ROUTE_NAME, $belAssistPaymentDto->toArray()));
     }
 
-    public function pay(BelAssistPayment $belAssistPayment): Response
+    public static function loadKeysFrom($path): void
     {
-        return $this->response->view('belassist::payment', [
-            'gateway' => $this->config->getGateway(),
-            'merchantId' => $this->config->getMerchantId(),
-            'order' => $belAssistPayment->getOrder(),
-            'delay' => $belAssistPayment->getDelay(),
-            'language' => $belAssistPayment->getLanguage(),
-            'amount' => $belAssistPayment->getFormattedAmount(),
-            'currency' => $belAssistPayment->getCurrency(),
-            'lastname' => $belAssistPayment->getLastname(),
-            'name' => $belAssistPayment->getName(),
-            'email' => $belAssistPayment->getEmail(),
-            'phone' => $belAssistPayment->getPhone(),
-            'urlReturn' => $belAssistPayment->getUrlReturn(),
-        ]);
+        static::$keyPath = $path;
+    }
+
+    public static function publicKeyPath(): string
+    {
+        return self::keyPath('assist-public.key');
+    }
+
+    public static function privateKeyPath(): string
+    {
+        return self::keyPath('assist-private.key');
+    }
+
+    private static function keyPath($file): string
+    {
+        $file = ltrim($file, '/\\');
+
+        return static::$keyPath
+            ? sprintf('%s%s%s', rtrim(static::$keyPath, '/\\'), DIRECTORY_SEPARATOR, $file)
+            : storage_path($file);
     }
 
     public function routes(array $options = [])

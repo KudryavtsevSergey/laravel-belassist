@@ -8,5 +8,4 @@ class XmlGenerationException extends InternalError
     {
         parent::__construct('Error xml generation');
     }
-
 }

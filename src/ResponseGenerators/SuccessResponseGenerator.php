@@ -2,6 +2,7 @@
 
 namespace Sun\BelAssist\ResponseGenerators;
 
+use DateTimeInterface;
 use SimpleXMLElement;
 use Sun\BelAssist\Enum\FirstResponseCodeEnum;
 use Sun\BelAssist\Enum\SecondResponseCodeEnum;
@@ -9,9 +10,9 @@ use Sun\BelAssist\Enum\SecondResponseCodeEnum;
 class SuccessResponseGenerator extends AbstractResponseGenerator
 {
     private string $billNumber;
-    private string $packetDate;
+    private DateTimeInterface $packetDate;
 
-    public function __construct(string $billNumber, string $packetDate)
+    public function __construct(string $billNumber, DateTimeInterface $packetDate)
     {
         parent::__construct(FirstResponseCodeEnum::SUCCESS, SecondResponseCodeEnum::NO_ADDITIONAL_INFORMATION);
         $this->billNumber = $billNumber;
@@ -23,7 +24,7 @@ class SuccessResponseGenerator extends AbstractResponseGenerator
         $xml = parent::createXml();
         $orderNode = $xml->addChild('order');
         $orderNode->addChild('billnumber', $this->billNumber);
-        $orderNode->addChild('packetdate', $this->packetDate);
+        $orderNode->addChild('packetdate', $this->packetDate->format('d.m.Y H:i:s'));
         return $xml;
     }
 }

@@ -5,5 +5,5 @@ return [
     'merchant_id' => env('ASSIST_MERCHANT_ID'),
     'username' => env('ASSIST_USERNAME'),
     'password' => env('ASSIST_PASSWORD'),
-    'request_code' => env('ASSIST_REQUEST_CODE'),
+    'salt' => env('ASSIST_SALT'),
 ];

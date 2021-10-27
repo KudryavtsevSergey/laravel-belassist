@@ -2,20 +2,63 @@
 
 namespace Sun\BelAssist\Dto\RequestDto;
 
+use Symfony\Component\Serializer\Annotation\SerializedName;
+
 class OrderStateRequestDto implements RequestDtoInterface
 {
+    /**
+     * @SerializedName("Ordernumber")
+     */
     private string $orderNumber;
 
+    /**
+     * @SerializedName("StartYear")
+     */
     private ?string $startYear;
+
+    /**
+     * @SerializedName("StartMonth")
+     */
     private ?string $startMonth;
+
+    /**
+     * @SerializedName("StartDay")
+     */
     private ?string $startDay;
+
+    /**
+     * @SerializedName("StartHour")
+     */
     private ?string $startHour;
+
+    /**
+     * @SerializedName("StartMin")
+     */
     private ?string $startMin;
 
+    /**
+     * @SerializedName("EndYear")
+     */
     private ?string $endYear;
+
+    /**
+     * @SerializedName("EndMonth")
+     */
     private ?string $endMonth;
+
+    /**
+     * @SerializedName("EndDay")
+     */
     private ?string $endDay;
+
+    /**
+     * @SerializedName("EndHour")
+     */
     private ?string $endHour;
+
+    /**
+     * @SerializedName("EndMin")
+     */
     private ?string $endMin;
 
     public function __construct(

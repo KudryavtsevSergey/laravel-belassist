@@ -4,27 +4,27 @@ namespace Sun\BelAssist\Enum;
 
 class FirstResponseCodeEnum extends AbstractEnum
 {
-    const SUCCESS = 0;
-    const ERROR = 1;
-    const INTERNAL_ERROR = 2;
-    const MISSING_REQUIRED_PARAMETER = 3;
-    const PARAMETER_FORMAT_ERROR = 4;
-    const INVALID_PARAMETER_VALUE = 5;
-    const INAPPROPRIATE_SYSTEM_VERSION = 6;
-    const AUTHENTICATION_ERROR = 7;
-    const AUTHORIZATION_ERROR = 8;
-    const ENCRYPTION_ERROR = 9;
-    const MISSING_OBJECT = 10;
-    const DUPLICATE_OBJECT = 11;
-    const OBJECT_LOCKED = 12;
-    const PROHIBITED_OBJECT = 14;
-    const PROHIBITED_OPERATION = 15;
-    const OPERATION_TIMED_OUT = 16;
-    const LIMITS_ERROR = 17;
-    const SUSPECTED_FRAUD = 18;
-    const ACCESS_DENIED = 19;
-    const AUTHORIZATION_3D_SECURE_ERROR = 20;
-    const OPERATION_REJECTED = 21;
+    public const SUCCESS = 0;
+    public const ERROR = 1;
+    public const INTERNAL_ERROR = 2;
+    public const MISSING_REQUIRED_PARAMETER = 3;
+    public const PARAMETER_FORMAT_ERROR = 4;
+    public const INVALID_PARAMETER_VALUE = 5;
+    public const INAPPROPRIATE_SYSTEM_VERSION = 6;
+    public const AUTHENTICATION_ERROR = 7;
+    public const AUTHORIZATION_ERROR = 8;
+    public const ENCRYPTION_ERROR = 9;
+    public const MISSING_OBJECT = 10;
+    public const DUPLICATE_OBJECT = 11;
+    public const OBJECT_LOCKED = 12;
+    public const PROHIBITED_OBJECT = 14;
+    public const PROHIBITED_OPERATION = 15;
+    public const OPERATION_TIMED_OUT = 16;
+    public const LIMITS_ERROR = 17;
+    public const SUSPECTED_FRAUD = 18;
+    public const ACCESS_DENIED = 19;
+    public const AUTHORIZATION_3D_SECURE_ERROR = 20;
+    public const OPERATION_REJECTED = 21;
 
     public static function getValues(): array
     {

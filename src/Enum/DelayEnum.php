@@ -4,8 +4,8 @@ namespace Sun\BelAssist\Enum;
 
 class DelayEnum extends AbstractEnum
 {
-    const ONE_STAGE = 1;
-    const TWO_STAGE = 2;
+    public const ONE_STAGE = 1;
+    public const TWO_STAGE = 2;
 
     public static function getValues(): array
     {

@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Facade as IlluminateFacade;
 
 class Facade extends IlluminateFacade
 {
-    const FACADE = 'BelAssist';
+    public const FACADE_ACCESSOR = 'BelAssist';
 
     protected static function getFacadeAccessor(): string
     {
-        return self::FACADE;
+        return self::FACADE_ACCESSOR;
     }
 }

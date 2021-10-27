@@ -12,6 +12,8 @@
     <input type="hidden" name="MobilePhone" value="{{ $phone }}" />
 
     <input type="hidden" name="URL_RETURN" value="{{ $urlReturn }}" />
+    <input type="hidden" name="Signature" value="{{ $signature }}" />
+    <input type="hidden" name="Checkvalue" value="{{ $checkValue }}" />
 
     <input type="submit" value="Pay" />
 </form>

@@ -5,17 +5,17 @@ namespace Sun\BelAssist\Exceptions\Request;
 use Sun\BelAssist\Enum\FirstResponseCodeEnum;
 use Sun\BelAssist\Enum\SecondResponseCodeEnum;
 
-class WrongBelAssistAuthCodeException extends AbstractResponsableException
+class WrongBelAssistCheckValueException extends AbstractResponsableException
 {
-    public function __construct(?string $authCode)
+    public function __construct(?string $checkValue)
     {
-        $message = sprintf('Wrong Auth Code: %s', $authCode);
+        $message = sprintf('Wrong Check Value: %s', $checkValue);
         parent::__construct($message);
     }
 
     protected function getFirstResponseCode(): int
     {
-        return FirstResponseCodeEnum::INVALID_PARAMETER_VALUE;
+        return FirstResponseCodeEnum::AUTHENTICATION_ERROR;
     }
 
     protected function getSecondResponseCode(): int

@@ -4,8 +4,8 @@ namespace Sun\BelAssist\Enum;
 
 class LanguageEnum extends AbstractEnum
 {
-    const RUSSIAN = 'RU';
-    const ENGLISH = 'EN';
+    public const RUSSIAN = 'RU';
+    public const ENGLISH = 'EN';
 
     public static function getValues(): array
     {

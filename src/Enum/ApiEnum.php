@@ -4,7 +4,7 @@ namespace Sun\BelAssist\Enum;
 
 class ApiEnum extends AbstractEnum
 {
-    const ORDER_STATE = 'orderstate/orderstate.cfm';
+    public const ORDER_STATE = 'orderstate/orderstate.cfm';
 
     public static function getValues(): array
     {

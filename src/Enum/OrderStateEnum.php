@@ -4,15 +4,15 @@ namespace Sun\BelAssist\Enum;
 
 class OrderStateEnum extends AbstractEnum
 {
-    const IN_PROCESS = 'In Process';
-    const AWAITING_PAYMENT_CONFIRMATION = 'Delayed';
-    const PAID = 'Approved';
-    const PAID_IN_PART = 'PartialApproved';
-    const PARTIALLY_CONFIRMED = 'PartialDelayed';
-    const CANCELED = 'Canceled';
-    const CANCELED_PARTIALLY = 'PartialCanceled';
-    const REJECTED = 'Declined';
-    const CLOSED_ON_EXPIRATION = 'Timeout';
+    public const IN_PROCESS = 'In Process';
+    public const AWAITING_PAYMENT_CONFIRMATION = 'Delayed';
+    public const PAID = 'Approved';
+    public const PAID_IN_PART = 'PartialApproved';
+    public const PARTIALLY_CONFIRMED = 'PartialDelayed';
+    public const CANCELED = 'Canceled';
+    public const CANCELED_PARTIALLY = 'PartialCanceled';
+    public const REJECTED = 'Declined';
+    public const CLOSED_ON_EXPIRATION = 'Timeout';
 
     public static function getValues(): array
     {

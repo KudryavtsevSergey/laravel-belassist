@@ -5,67 +5,214 @@ namespace Sun\BelAssist\Dto\ResponseDto;
 use DateTimeInterface;
 use Sun\BelAssist\Enum\OperationTypeEnum;
 use Sun\BelAssist\Enum\ResponseCodeEnum;
+use Sun\BelAssist\Service\CheckValueInterface;
+use Sun\BelAssist\Service\SignatureInterface;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
-class OrderPaymentDto extends OrderStateResponseDto
+class OrderPaymentDto implements SignatureInterface, CheckValueInterface, ResponseDtoInterface
 {
+    /**
+     * @SerializedName("merchant_id")
+     */
     private string $merchantId;
+
+    /**
+     * @SerializedName("ordernumber")
+     */
+    private int $orderNumber;
+
+    /**
+     * @SerializedName("billnumber")
+     */
+    private string $billNumber;
+
+    /**
+     * @SerializedName("testmode")
+     */
     private bool $testMode;
+
+    /**
+     * @SerializedName("ordercomment")
+     */
     private ?string $orderComment;
-    private float $amount;
-    private string $currency;
+
+    /**
+     * @SerializedName("orderamount")
+     */
+    private float $orderAmount;
+
+    /**
+     * @SerializedName("ordercurrency")
+     */
+    private string $orderCurrency;
+
+    /**
+     * @SerializedName("amount")
+     */
+    private float $operationAmount;
+
+    /**
+     * @SerializedName("currency")
+     */
+    private string $operationCurrency;
+
     private float $rate;
-    private ?string $firstName;
-    private ?string $lastName;
-    private ?string $middleName;
+    private ?string $firstname;
+    private ?string $lastname;
+    private ?string $middlename;
     private ?string $email;
+
+    /**
+     * @SerializedName("clientip")
+     */
     private ?string $clientIp;
+
+    /**
+     * @SerializedName("ipaddress")
+     */
     private ?string $ipAddress;
+
+    /**
+     * @SerializedName("meantype_id")
+     */
     private int $meanTypeId;
-    private int $meanTypeName;
+
+    /**
+     * @SerializedName("meantypename")
+     */
+    private string $meanTypeName;
+
+    /**
+     * @SerializedName("meansubtype")
+     */
     private string $meanSubtype;
+
+    /**
+     * @SerializedName("meannumber")
+     */
     private string $meanNumber;
+
+    /**
+     * @SerializedName("cardholder")
+     */
     private string $cardHolder;
+
+    /**
+     * @SerializedName("cardexpirationdate")
+     */
     private string $cardExpirationDate;
+
+    /**
+     * @SerializedName("issuebank")
+     */
     private string $issueBank;
+
+    /**
+     * @SerializedName("bankcountry")
+     */
     private string $bankCountry;
+
+    /**
+     * @SerializedName("orderdate")
+     */
     private DateTimeInterface $orderDate;
+
+    /**
+     * @SerializedName("orderstate")
+     */
+    private string $orderState;
+
+    /**
+     * @SerializedName("responsecode")
+     */
     private string $responseCode;
+
     private ?string $message;
+
+    /**
+     * @SerializedName("customermessage")
+     */
     private ?string $customerMessage;
+
+    /**
+     * @SerializedName("recommendation")
+     */
     private ?string $recommendation;
+
+    /**
+     * @SerializedName("approvalcode")
+     */
     private ?string $approvalCode;
+
+    /**
+     * @SerializedName("protocoltypename")
+     */
     private ?string $protocolTypeName;
+
+    /**
+     * @SerializedName("processingname")
+     */
     private ?string $processingName;
+
+    /**
+     * @SerializedName("operationtype")
+     */
     private string $operationType;
+
+    /**
+     * @SerializedName("operationdate")
+     */
     private DateTimeInterface $operationDate;
+
+    /**
+     * @SerializedName("authresult")
+     */
     private ?string $authResult;
-    private bool $authRequired;
+
+    /**
+     * @SerializedName("authrequired")
+     */
+    private ?bool $authRequired;
+
+    /**
+     * @SerializedName("packetdate")
+     */
+    private DateTimeInterface $packetDate;
+
+    /**
+     * @SerializedName("signature")
+     */
     private ?string $signature;
+
+    /**
+     * @SerializedName("checkvalue")
+     */
+    private string $checkValue;
+
+    /**
+     * @SerializedName("slipno")
+     */
     private ?string $slipNo;
 
     public function __construct(
-        string $billNumber,
-        string $orderNumber,
-        string $orderState,
-        float $orderAmount,
-        string $orderCurrency,
-        DateTimeInterface $packetDate,
-        string $checkValue,
-
         string $merchantId,
+        int $orderNumber,
+        string $billNumber,
         bool $testMode,
         ?string $orderComment,
-        float $amount,
-        string $currency,
+        float $orderAmount,
+        string $orderCurrency,
+        float $operationAmount,
+        string $operationCurrency,
         float $rate,
-        ?string $firstName,
-        ?string $lastName,
-        ?string $middleName,
+        ?string $firstname,
+        ?string $lastname,
+        ?string $middlename,
         ?string $email,
         ?string $clientIp,
         ?string $ipAddress,
         int $meanTypeId,
-        int $meanTypeName,
+        string $meanTypeName,
         string $meanSubtype,
         string $meanNumber,
         string $cardHolder,
@@ -73,6 +220,7 @@ class OrderPaymentDto extends OrderStateResponseDto
         string $issueBank,
         string $bankCountry,
         DateTimeInterface $orderDate,
+        string $orderState,
         string $responseCode,
         ?string $message,
         ?string $customerMessage,
@@ -83,23 +231,28 @@ class OrderPaymentDto extends OrderStateResponseDto
         string $operationType,
         DateTimeInterface $operationDate,
         ?string $authResult,
-        bool $authRequired,
+        ?bool $authRequired,
+        DateTimeInterface $packetDate,
         ?string $signature,
+        string $checkValue,
         ?string $slipNo
     ) {
         ResponseCodeEnum::checkAllowedValue($responseCode);
         OperationTypeEnum::checkAllowedValue($operationType);
-        parent::__construct($billNumber, $orderNumber, $orderState, $orderAmount, $orderCurrency, $packetDate, $checkValue);
 
         $this->merchantId = $merchantId;
+        $this->orderNumber = $orderNumber;
+        $this->billNumber = $billNumber;
         $this->testMode = $testMode;
         $this->orderComment = $orderComment;
-        $this->amount = $amount;
-        $this->currency = $currency;
+        $this->orderAmount = $orderAmount;
+        $this->orderCurrency = $orderCurrency;
+        $this->operationAmount = $operationAmount;
+        $this->operationCurrency = $operationCurrency;
         $this->rate = $rate;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->middleName = $middleName;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->middlename = $middlename;
         $this->email = $email;
         $this->clientIp = $clientIp;
         $this->ipAddress = $ipAddress;
@@ -112,6 +265,7 @@ class OrderPaymentDto extends OrderStateResponseDto
         $this->issueBank = $issueBank;
         $this->bankCountry = $bankCountry;
         $this->orderDate = $orderDate;
+        $this->orderState = $orderState;
         $this->responseCode = $responseCode;
         $this->message = $message;
         $this->customerMessage = $customerMessage;
@@ -123,13 +277,25 @@ class OrderPaymentDto extends OrderStateResponseDto
         $this->operationDate = $operationDate;
         $this->authResult = $authResult;
         $this->authRequired = $authRequired;
+        $this->packetDate = $packetDate;
         $this->signature = $signature;
+        $this->checkValue = $checkValue;
         $this->slipNo = $slipNo;
     }
 
     public function getMerchantId(): string
     {
         return $this->merchantId;
+    }
+
+    public function getOrderNumber(): int
+    {
+        return $this->orderNumber;
+    }
+
+    public function getBillNumber(): string
+    {
+        return $this->billNumber;
     }
 
     public function isTestMode(): bool
@@ -142,14 +308,24 @@ class OrderPaymentDto extends OrderStateResponseDto
         return $this->orderComment;
     }
 
-    public function getAmount(): float
+    public function getOrderAmount(): float
     {
-        return $this->amount;
+        return $this->orderAmount;
     }
 
-    public function getCurrency(): string
+    public function getOrderCurrency(): string
     {
-        return $this->currency;
+        return $this->orderCurrency;
+    }
+
+    public function getOperationAmount(): float
+    {
+        return $this->operationAmount;
+    }
+
+    public function getOperationCurrency(): string
+    {
+        return $this->operationCurrency;
     }
 
     public function getRate(): float
@@ -157,19 +333,19 @@ class OrderPaymentDto extends OrderStateResponseDto
         return $this->rate;
     }
 
-    public function getFirstName(): ?string
+    public function getFirstname(): ?string
     {
-        return $this->firstName;
+        return $this->firstname;
     }
 
-    public function getLastName(): ?string
+    public function getLastname(): ?string
     {
-        return $this->lastName;
+        return $this->lastname;
     }
 
-    public function getMiddleName(): ?string
+    public function getMiddlename(): ?string
     {
-        return $this->middleName;
+        return $this->middlename;
     }
 
     public function getEmail(): ?string
@@ -192,7 +368,7 @@ class OrderPaymentDto extends OrderStateResponseDto
         return $this->meanTypeId;
     }
 
-    public function getMeanTypeName(): int
+    public function getMeanTypeName(): string
     {
         return $this->meanTypeName;
     }
@@ -230,6 +406,11 @@ class OrderPaymentDto extends OrderStateResponseDto
     public function getOrderDate(): DateTimeInterface
     {
         return $this->orderDate;
+    }
+
+    public function getOrderState(): string
+    {
+        return $this->orderState;
     }
 
     public function getResponseCode(): string
@@ -282,9 +463,14 @@ class OrderPaymentDto extends OrderStateResponseDto
         return $this->authResult;
     }
 
-    public function isAuthRequired(): bool
+    public function isAuthRequired(): ?bool
     {
         return $this->authRequired;
+    }
+
+    public function getPacketDate(): DateTimeInterface
+    {
+        return $this->packetDate;
     }
 
     public function getSignature(): ?string
@@ -292,8 +478,28 @@ class OrderPaymentDto extends OrderStateResponseDto
         return $this->signature;
     }
 
+    public function getCheckValue(): string
+    {
+        return $this->checkValue;
+    }
+
     public function getSlipNo(): ?string
     {
         return $this->slipNo;
+    }
+
+    public function getOrder(): string
+    {
+        return $this->orderNumber;
+    }
+
+    public function getAmount(): float
+    {
+        return $this->orderAmount;
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->orderCurrency;
     }
 }

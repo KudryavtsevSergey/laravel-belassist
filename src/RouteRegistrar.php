@@ -5,9 +5,7 @@ namespace Sun\BelAssist;
 use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Routing\Router;
 use Sun\BelAssist\Http\Controllers\BelAssistCallbackController;
-use Sun\BelAssist\Http\Middleware\SafeWrapper;
-use Sun\BelAssist\Http\Middleware\VerifyBelAssistAuthCode;
-use Sun\BelAssist\Http\Middleware\VerifyBelAssistMerchantId;
+use Sun\BelAssist\Http\Controllers\BelAssistPaymentController;
 
 class RouteRegistrar
 {
@@ -20,14 +18,15 @@ class RouteRegistrar
 
     public function routes(): void
     {
-        $this->router->group(
-            ['middleware' => [SafeWrapper::class, VerifyBelAssistAuthCode::class, VerifyBelAssistMerchantId::class]],
-            function (Router $router): void {
-                $router->post('confirmpayment', [
-                    'uses' => 'BelAssistCallbackController@confirmPayment',
-                    'as' => BelAssistCallbackController::CONFIRM_PAYMENT_ROUTE_NAME,
-                ]);
-            }
-        );
+        $this->router->group([], function (Router $router): void {
+            $router->get('pay', [
+                'uses' => 'BelAssistPaymentController@pay',
+                'as' => BelAssistPaymentController::PAY_ROUTE_NAME,
+            ]);
+            $router->post('confirmpayment', [
+                'uses' => 'BelAssistCallbackController@confirmPayment',
+                'as' => BelAssistCallbackController::CONFIRM_PAYMENT_ROUTE_NAME,
+            ]);
+        });
     }
 }
