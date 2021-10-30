@@ -2,7 +2,6 @@
 
 namespace Sun\BelAssist;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Sun\BelAssist\Dto\ResponseDto\BelAssistPaymentDto;
 use Sun\BelAssist\Http\Controllers\BelAssistPaymentController;
@@ -11,9 +10,9 @@ class BelAssist
 {
     public static ?string $keyPath = null;
 
-    public function pay(BelAssistPaymentDto $belAssistPaymentDto): RedirectResponse
+    public function paymentLink(BelAssistPaymentDto $belAssistPaymentDto): string
     {
-        return redirect(route(BelAssistPaymentController::PAY_ROUTE_NAME, $belAssistPaymentDto->toArray()));
+        return route(BelAssistPaymentController::PAY_ROUTE_NAME, $belAssistPaymentDto->toArray());
     }
 
     public static function loadKeysFrom($path): void

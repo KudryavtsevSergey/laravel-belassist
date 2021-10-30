@@ -2,6 +2,7 @@
 
 namespace Sun\BelAssist\Mapper;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use Sun\BelAssist\Dto\RequestDto\RequestDtoInterface;
 use Sun\BelAssist\Dto\ResponseDto\ResponseDtoInterface;
 use Sun\BelAssist\Exceptions\InternalError;
@@ -9,6 +10,9 @@ use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -31,11 +35,12 @@ class ArrayObjectMapper
             [$reflectionExtractor],
             [$reflectionExtractor]
         );
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $normalizers = [
             new DateTimeNormalizer([
                 DateTimeNormalizer::FORMAT_KEY => 'd.m.Y H:i:s',
             ]),
-            new ObjectNormalizer(null, null, null, $propertyTypeExtractor),
+            new ObjectNormalizer(null, new MetadataAwareNameConverter($classMetadataFactory), null, $propertyTypeExtractor),
             new ArrayDenormalizer(),
         ];
         $this->serializer = new Serializer($normalizers);
