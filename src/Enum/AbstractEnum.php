@@ -10,8 +10,13 @@ abstract class AbstractEnum
     {
         $isAllow = $isAllowNull && is_null($value);
         if (!$isAllow && !static::isContainValue($value)) {
-            throw new InvalidValueException($value, static::getValues());
+            throw self::invalidValue($value);
         }
+    }
+
+    public static function invalidValue($value): InvalidValueException
+    {
+        return new InvalidValueException($value, static::getValues());
     }
 
     public static function isContainValue($value): bool

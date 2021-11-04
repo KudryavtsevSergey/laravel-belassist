@@ -2,13 +2,20 @@
 
 namespace Sun\BelAssist;
 
+use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Support\Facades\Route;
 use Sun\BelAssist\Dto\ResponseDto\BelAssistPaymentDto;
 use Sun\BelAssist\Http\Controllers\BelAssistPaymentController;
+use Sun\BelAssist\Service\BelAssistApiService;
 
 class BelAssist
 {
     public static ?string $keyPath = null;
+
+    public function apiService(): BelAssistApiService
+    {
+        return app(BelAssistApiService::class);
+    }
 
     public function paymentLink(BelAssistPaymentDto $belAssistPaymentDto): string
     {
@@ -39,13 +46,13 @@ class BelAssist
             : storage_path($file);
     }
 
-    public function routes(array $options = [])
+    public function routes(array $options = []): void
     {
         $defaultOptions = ['prefix' => 'belassist', 'namespace' => '\Sun\BelAssist\Http\Controllers'];
 
         $options = array_merge($defaultOptions, $options);
 
-        Route::group($options, function ($router): void {
+        Route::group($options, function (Registrar $router): void {
             (new RouteRegistrar($router))->routes();
         });
     }
