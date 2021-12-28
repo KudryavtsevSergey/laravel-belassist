@@ -19,7 +19,7 @@ class OrderPaymentDto implements SignatureInterface, CheckValueInterface, Respon
     /**
      * @SerializedName("ordernumber")
      */
-    private int $orderNumber;
+    private string $orderNumber;
 
     /**
      * @SerializedName("billnumber")
@@ -196,7 +196,7 @@ class OrderPaymentDto implements SignatureInterface, CheckValueInterface, Respon
 
     public function __construct(
         string $merchantId,
-        int $orderNumber,
+        string $orderNumber,
         string $billNumber,
         bool $testMode,
         ?string $orderComment,
@@ -288,7 +288,7 @@ class OrderPaymentDto implements SignatureInterface, CheckValueInterface, Respon
         return $this->merchantId;
     }
 
-    public function getOrderNumber(): int
+    public function getOrderNumber(): string
     {
         return $this->orderNumber;
     }
