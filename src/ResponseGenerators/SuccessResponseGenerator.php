@@ -9,14 +9,11 @@ use Sun\BelAssist\Enum\SecondResponseCodeEnum;
 
 class SuccessResponseGenerator extends AbstractResponseGenerator
 {
-    private string $billNumber;
-    private DateTimeInterface $packetDate;
-
-    public function __construct(string $billNumber, DateTimeInterface $packetDate)
-    {
+    public function __construct(
+        private string $billNumber,
+        private DateTimeInterface $packetDate,
+    ) {
         parent::__construct(FirstResponseCodeEnum::SUCCESS, SecondResponseCodeEnum::NO_ADDITIONAL_INFORMATION);
-        $this->billNumber = $billNumber;
-        $this->packetDate = $packetDate;
     }
 
     protected function createXml(): SimpleXMLElement

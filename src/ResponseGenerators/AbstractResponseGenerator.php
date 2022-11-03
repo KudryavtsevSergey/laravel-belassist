@@ -7,13 +7,10 @@ use Sun\BelAssist\Exceptions\XmlGenerationException;
 
 abstract class AbstractResponseGenerator
 {
-    private int $firstCode;
-    private int $secondCode;
-
-    public function __construct(int $firstCode, int $secondCode)
-    {
-        $this->firstCode = $firstCode;
-        $this->secondCode = $secondCode;
+    public function __construct(
+        private int $firstCode,
+        private int $secondCode,
+    ) {
     }
 
     public function generateXml(): string

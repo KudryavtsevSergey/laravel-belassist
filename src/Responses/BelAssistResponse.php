@@ -8,11 +8,9 @@ use Sun\BelAssist\ResponseGenerators\AbstractResponseGenerator;
 
 class BelAssistResponse implements Responsable
 {
-    private AbstractResponseGenerator $generator;
-
-    public function __construct(AbstractResponseGenerator $generator)
-    {
-        $this->generator = $generator;
+    public function __construct(
+        private AbstractResponseGenerator $generator,
+    ) {
     }
 
     public function toResponse($request): Response

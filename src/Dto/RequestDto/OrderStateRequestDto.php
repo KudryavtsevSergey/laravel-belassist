@@ -6,85 +6,19 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class OrderStateRequestDto implements RequestDtoInterface
 {
-    /**
-     * @SerializedName("Ordernumber")
-     */
-    private string $orderNumber;
-
-    /**
-     * @SerializedName("StartYear")
-     */
-    private ?string $startYear;
-
-    /**
-     * @SerializedName("StartMonth")
-     */
-    private ?string $startMonth;
-
-    /**
-     * @SerializedName("StartDay")
-     */
-    private ?string $startDay;
-
-    /**
-     * @SerializedName("StartHour")
-     */
-    private ?string $startHour;
-
-    /**
-     * @SerializedName("StartMin")
-     */
-    private ?string $startMin;
-
-    /**
-     * @SerializedName("EndYear")
-     */
-    private ?string $endYear;
-
-    /**
-     * @SerializedName("EndMonth")
-     */
-    private ?string $endMonth;
-
-    /**
-     * @SerializedName("EndDay")
-     */
-    private ?string $endDay;
-
-    /**
-     * @SerializedName("EndHour")
-     */
-    private ?string $endHour;
-
-    /**
-     * @SerializedName("EndMin")
-     */
-    private ?string $endMin;
-
     public function __construct(
-        string $orderNumber,
-        ?string $startYear = null,
-        ?string $startMonth = null,
-        ?string $startDay = null,
-        ?string $startHour = null,
-        ?string $startMin = null,
-        ?string $endYear = null,
-        ?string $endMonth = null,
-        ?string $endDay = null,
-        ?string $endHour = null,
-        ?string $endMin = null
+        #[SerializedName('Ordernumber')] private string $orderNumber,
+        #[SerializedName('StartYear')] private ?string $startYear = null,
+        #[SerializedName('StartMonth')] private ?string $startMonth = null,
+        #[SerializedName('StartDay')] private ?string $startDay = null,
+        #[SerializedName('StartHour')] private ?string $startHour = null,
+        #[SerializedName('StartMin')] private ?string $startMin = null,
+        #[SerializedName('EndYear')] private ?string $endYear = null,
+        #[SerializedName('EndMonth')] private ?string $endMonth = null,
+        #[SerializedName('EndDay')] private ?string $endDay = null,
+        #[SerializedName('EndHour')] private ?string $endHour = null,
+        #[SerializedName('EndMin')] private ?string $endMin = null,
     ) {
-        $this->orderNumber = $orderNumber;
-        $this->startYear = $startYear;
-        $this->startMonth = $startMonth;
-        $this->startDay = $startDay;
-        $this->startHour = $startHour;
-        $this->startMin = $startMin;
-        $this->endYear = $endYear;
-        $this->endMonth = $endMonth;
-        $this->endDay = $endDay;
-        $this->endHour = $endHour;
-        $this->endMin = $endMin;
     }
 
     public function getOrderNumber(): string

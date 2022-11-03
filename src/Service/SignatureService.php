@@ -10,17 +10,26 @@ use Sun\BelAssist\BelAssistConfig;
 
 class SignatureService implements SignatureServiceContract
 {
-    private BelAssistConfig $config;
+    private const EMPTY = 'empty';
+
     private Sha256 $signer;
     private Key $privateKey;
     private Key $publicKey;
 
-    public function __construct(BelAssistConfig $config, CryptKey $privateKey, CryptKey $publicKey)
-    {
-        $this->config = $config;
+    public function __construct(
+        private BelAssistConfig $config,
+        ?CryptKey $privateKey,
+        ?CryptKey $publicKey,
+    ) {
         $this->signer = new Sha256();
-        $this->privateKey = InMemory::plainText($privateKey->getKeyContents(), $privateKey->getPassPhrase() ?? '');
-        $this->publicKey = InMemory::plainText($publicKey->getKeyContents(), $publicKey->getPassPhrase() ?? '');
+        $this->privateKey = InMemory::plainText(
+            $privateKey?->getKeyContents() ?? self::EMPTY,
+            $privateKey?->getPassPhrase() ?? ''
+        );
+        $this->publicKey = InMemory::plainText(
+            $publicKey?->getKeyContents() ?? self::EMPTY,
+            $publicKey?->getPassPhrase() ?? ''
+        );
     }
 
     public function generate(SignatureInterface $signature): string

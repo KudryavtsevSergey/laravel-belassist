@@ -15,24 +15,13 @@ class BelAssistPaymentController extends AbstractController
 {
     public const PAY_ROUTE_NAME = 'belassist.pay';
 
-    private BelAssistConfig $config;
-    private ResponseFactory $response;
-    private CheckValueServiceContract $checkValueService;
-    private SignatureServiceContract $signatureService;
-    private ArrayObjectMapper $arrayObjectMapper;
-
     public function __construct(
-        BelAssistConfig $config,
-        ResponseFactory $response,
-        CheckValueServiceContract $checkValueService,
-        SignatureServiceContract $signatureService,
-        ArrayObjectMapper $arrayObjectMapper
+        private BelAssistConfig $config,
+        private ResponseFactory $response,
+        private CheckValueServiceContract $checkValueService,
+        private SignatureServiceContract $signatureService,
+        private ArrayObjectMapper $arrayObjectMapper,
     ) {
-        $this->config = $config;
-        $this->response = $response;
-        $this->checkValueService = $checkValueService;
-        $this->signatureService = $signatureService;
-        $this->arrayObjectMapper = $arrayObjectMapper;
     }
 
     public function pay(Request $request): Response
@@ -40,7 +29,7 @@ class BelAssistPaymentController extends AbstractController
         /** @var BelAssistPaymentDto $payment */
         $payment = $this->arrayObjectMapper->deserialize($request->all(), BelAssistPaymentDto::class);
 
-        return $this->response->view('belassist::payment', [
+        $data = [
             'gateway' => $this->config->getGateway(),
             'merchantId' => $this->config->getMerchantId(),
             'order' => $payment->getOrder(),
@@ -53,8 +42,15 @@ class BelAssistPaymentController extends AbstractController
             'email' => $payment->getEmail(),
             'phone' => $payment->getPhone(),
             'urlReturn' => $payment->getUrlReturn(),
-            'signature' => $this->signatureService->generate($payment),
-            'checkValue' => $this->checkValueService->generate($payment),
-        ]);
+        ];
+
+        if ($this->config->isCheckSignature()) {
+            $data['signature'] = $this->signatureService->generate($payment);
+        }
+        if ($this->config->isCheckCheckValue()) {
+            $data['checkValue'] = $this->checkValueService->generate($payment);
+        }
+
+        return $this->response->view('belassist::payment', $data);
     }
 }

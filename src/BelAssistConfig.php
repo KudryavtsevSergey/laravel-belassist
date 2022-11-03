@@ -6,11 +6,9 @@ use Illuminate\Contracts\Config\Repository as Config;
 
 class BelAssistConfig
 {
-    private Config $config;
-
-    public function __construct(Config $config)
-    {
-        $this->config = $config;
+    public function __construct(
+        private Config $config,
+    ) {
     }
 
     public function getGateway(): ?string
@@ -36,5 +34,15 @@ class BelAssistConfig
     public function getSalt(): ?string
     {
         return $this->config->get('belassist.salt');
+    }
+
+    public function isCheckSignature(): bool
+    {
+        return $this->config->get('belassist.check_signature');
+    }
+
+    public function isCheckCheckValue(): bool
+    {
+        return $this->config->get('belassist.check_check_value');
     }
 }

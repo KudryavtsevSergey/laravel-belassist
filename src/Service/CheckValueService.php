@@ -6,11 +6,9 @@ use Sun\BelAssist\BelAssistConfig;
 
 class CheckValueService implements CheckValueServiceContract
 {
-    private BelAssistConfig $config;
-
-    public function __construct(BelAssistConfig $config)
-    {
-        $this->config = $config;
+    public function __construct(
+        private BelAssistConfig $config,
+    ) {
     }
 
     public function generate(CheckValueInterface $checkValue): string

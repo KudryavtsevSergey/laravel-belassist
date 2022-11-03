@@ -16,17 +16,15 @@ class BelAssistHttpClientService
 {
     private const REQUEST_METHOD = 'POST';
 
-    private ArrayObjectMapper $arrayObjectMapper;
-    private BelAssistConfig $config;
     private Client $client;
 
-    public function __construct(ArrayObjectMapper $arrayObjectMapper, BelAssistConfig $config)
-    {
-        $this->arrayObjectMapper = $arrayObjectMapper;
+    public function __construct(
+        private ArrayObjectMapper $arrayObjectMapper,
+        private BelAssistConfig $config
+    ) {
         $this->client = new Client([
             'base_uri' => $config->getGateway(),
         ]);
-        $this->config = $config;
     }
 
     public function request(string $method, RequestDtoInterface $requestDto, string $responseType): ResponseDtoInterface

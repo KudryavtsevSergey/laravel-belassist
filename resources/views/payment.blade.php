@@ -12,12 +12,16 @@
     <input type="hidden" name="MobilePhone" value="{{ $phone }}" />
 
     <input type="hidden" name="URL_RETURN" value="{{ $urlReturn }}" />
-    <input type="hidden" name="Signature" value="{{ $signature }}" />
-    <input type="hidden" name="Checkvalue" value="{{ $checkValue }}" />
+    @if(isset($signature))
+        <input type="hidden" name="Signature" value="{{ $signature }}" />
+    @endif
+    @if(isset($checkValue))
+        <input type="hidden" name="Checkvalue" value="{{ $checkValue }}" />
+    @endif
 
     <input type="submit" value="Pay" />
 </form>
 
 <script>
-document.getElementById('payment').submit();
+  document.getElementById('payment').submit();
 </script>

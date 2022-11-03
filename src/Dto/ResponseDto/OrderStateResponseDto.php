@@ -10,59 +10,17 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class OrderStateResponseDto implements CheckValueInterface, ResponseDtoInterface
 {
-    /**
-     * @SerializedName("billnumber")
-     */
-    private string $billNumber;
-
-    /**
-     * @SerializedName("Ordernumber")
-     */
-    private int $orderNumber;
-
-    /**
-     * @SerializedName("orderstate")
-     */
-    private string $orderState;
-
-    /**
-     * @SerializedName("orderamount")
-     */
-    private float $orderAmount;
-
-    /**
-     * @SerializedName("ordercurrency")
-     */
-    private string $orderCurrency;
-
-    /**
-     * @SerializedName("packetdate")
-     */
-    private DateTimeInterface $packetDate;
-
-    /**
-     * @SerializedName("checkvalue")
-     */
-    private string $checkValue;
-
     public function __construct(
-        string $billNumber,
-        string $orderNumber,
-        string $orderState,
-        float $orderAmount,
-        string $orderCurrency,
-        DateTimeInterface $packetDate,
-        string $checkValue
+        #[SerializedName('billnumber')] private string $billNumber,
+        #[SerializedName('Ordernumber')] private string $orderNumber,
+        #[SerializedName('orderstate')] private string $orderState,
+        #[SerializedName('orderamount')] private float $orderAmount,
+        #[SerializedName('ordercurrency')] private string $orderCurrency,
+        #[SerializedName('packetdate')] private DateTimeInterface $packetDate,
+        #[SerializedName('checkvalue')] private string $checkValue,
     ) {
         OrderStateEnum::checkAllowedValue($orderState);
         BelAssistCurrencyEnum::checkAllowedValue($orderCurrency);
-        $this->billNumber = $billNumber;
-        $this->orderNumber = $orderNumber;
-        $this->orderState = $orderState;
-        $this->orderAmount = $orderAmount;
-        $this->orderCurrency = $orderCurrency;
-        $this->packetDate = $packetDate;
-        $this->checkValue = $checkValue;
     }
 
     public function getBillNumber(): string

@@ -8,11 +8,9 @@ use Sun\BelAssist\Enum\ApiEnum;
 
 class BelAssistApiService
 {
-    private BelAssistHttpClientService $httpClient;
-
-    public function __construct(BelAssistHttpClientService $httpClient)
-    {
-        $this->httpClient = $httpClient;
+    public function __construct(
+        private BelAssistHttpClientService $httpClient,
+    ) {
     }
 
     public function orderState(OrderStateRequestDto $orderStateRequestDto): OrderStateResponseDto

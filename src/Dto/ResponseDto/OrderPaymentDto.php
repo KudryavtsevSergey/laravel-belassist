@@ -11,276 +11,51 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class OrderPaymentDto implements SignatureInterface, CheckValueInterface, ResponseDtoInterface
 {
-    /**
-     * @SerializedName("merchant_id")
-     */
-    private string $merchantId;
-
-    /**
-     * @SerializedName("ordernumber")
-     */
-    private string $orderNumber;
-
-    /**
-     * @SerializedName("billnumber")
-     */
-    private string $billNumber;
-
-    /**
-     * @SerializedName("testmode")
-     */
-    private bool $testMode;
-
-    /**
-     * @SerializedName("ordercomment")
-     */
-    private ?string $orderComment;
-
-    /**
-     * @SerializedName("orderamount")
-     */
-    private float $orderAmount;
-
-    /**
-     * @SerializedName("ordercurrency")
-     */
-    private string $orderCurrency;
-
-    /**
-     * @SerializedName("amount")
-     */
-    private float $operationAmount;
-
-    /**
-     * @SerializedName("currency")
-     */
-    private string $operationCurrency;
-
-    private float $rate;
-    private ?string $firstname;
-    private ?string $lastname;
-    private ?string $middlename;
-    private ?string $email;
-
-    /**
-     * @SerializedName("clientip")
-     */
-    private ?string $clientIp;
-
-    /**
-     * @SerializedName("ipaddress")
-     */
-    private ?string $ipAddress;
-
-    /**
-     * @SerializedName("meantype_id")
-     */
-    private int $meanTypeId;
-
-    /**
-     * @SerializedName("meantypename")
-     */
-    private string $meanTypeName;
-
-    /**
-     * @SerializedName("meansubtype")
-     */
-    private string $meanSubtype;
-
-    /**
-     * @SerializedName("meannumber")
-     */
-    private string $meanNumber;
-
-    /**
-     * @SerializedName("cardholder")
-     */
-    private string $cardHolder;
-
-    /**
-     * @SerializedName("cardexpirationdate")
-     */
-    private string $cardExpirationDate;
-
-    /**
-     * @SerializedName("issuebank")
-     */
-    private string $issueBank;
-
-    /**
-     * @SerializedName("bankcountry")
-     */
-    private string $bankCountry;
-
-    /**
-     * @SerializedName("orderdate")
-     */
-    private DateTimeInterface $orderDate;
-
-    /**
-     * @SerializedName("orderstate")
-     */
-    private string $orderState;
-
-    /**
-     * @SerializedName("responsecode")
-     */
-    private string $responseCode;
-
-    private ?string $message;
-
-    /**
-     * @SerializedName("customermessage")
-     */
-    private ?string $customerMessage;
-
-    /**
-     * @SerializedName("recommendation")
-     */
-    private ?string $recommendation;
-
-    /**
-     * @SerializedName("approvalcode")
-     */
-    private ?string $approvalCode;
-
-    /**
-     * @SerializedName("protocoltypename")
-     */
-    private ?string $protocolTypeName;
-
-    /**
-     * @SerializedName("processingname")
-     */
-    private ?string $processingName;
-
-    /**
-     * @SerializedName("operationtype")
-     */
-    private string $operationType;
-
-    /**
-     * @SerializedName("operationdate")
-     */
-    private DateTimeInterface $operationDate;
-
-    /**
-     * @SerializedName("authresult")
-     */
-    private ?string $authResult;
-
-    /**
-     * @SerializedName("authrequired")
-     */
-    private ?bool $authRequired;
-
-    /**
-     * @SerializedName("packetdate")
-     */
-    private DateTimeInterface $packetDate;
-
-    /**
-     * @SerializedName("signature")
-     */
-    private ?string $signature;
-
-    /**
-     * @SerializedName("checkvalue")
-     */
-    private string $checkValue;
-
-    /**
-     * @SerializedName("slipno")
-     */
-    private ?string $slipNo;
-
     public function __construct(
-        string $merchantId,
-        string $orderNumber,
-        string $billNumber,
-        bool $testMode,
-        ?string $orderComment,
-        float $orderAmount,
-        string $orderCurrency,
-        float $operationAmount,
-        string $operationCurrency,
-        float $rate,
-        ?string $firstname,
-        ?string $lastname,
-        ?string $middlename,
-        ?string $email,
-        ?string $clientIp,
-        ?string $ipAddress,
-        int $meanTypeId,
-        string $meanTypeName,
-        string $meanSubtype,
-        string $meanNumber,
-        string $cardHolder,
-        string $cardExpirationDate,
-        string $issueBank,
-        string $bankCountry,
-        DateTimeInterface $orderDate,
-        string $orderState,
-        string $responseCode,
-        ?string $message,
-        ?string $customerMessage,
-        ?string $recommendation,
-        ?string $approvalCode,
-        ?string $protocolTypeName,
-        ?string $processingName,
-        string $operationType,
-        DateTimeInterface $operationDate,
-        ?string $authResult,
-        ?bool $authRequired,
-        DateTimeInterface $packetDate,
-        ?string $signature,
-        string $checkValue,
-        ?string $slipNo
+        #[SerializedName('merchant_id')] private string $merchantId,
+        #[SerializedName('ordernumber')] private string $orderNumber,
+        #[SerializedName('billnumber')] private string $billNumber,
+        #[SerializedName('testmode')] private bool $testMode,
+        #[SerializedName('ordercomment')] private ?string $orderComment,
+        #[SerializedName('orderamount')] private float $orderAmount,
+        #[SerializedName('ordercurrency')] private string $orderCurrency,
+        #[SerializedName('amount')] private float $operationAmount,
+        #[SerializedName('currency')] private string $operationCurrency,
+        private float $rate,
+        private ?string $firstname,
+        private ?string $lastname,
+        private ?string $middlename,
+        private ?string $email,
+        #[SerializedName('clientip')] private ?string $clientIp,
+        #[SerializedName('ipaddress')] private ?string $ipAddress,
+        #[SerializedName('meantype_id')] private int $meanTypeId,
+        #[SerializedName('meantypename')] private string $meanTypeName,
+        #[SerializedName('meansubtype')] private string $meanSubtype,
+        #[SerializedName('meannumber')] private string $meanNumber,
+        #[SerializedName('cardholder')] private string $cardHolder,
+        #[SerializedName('cardexpirationdate')] private string $cardExpirationDate,
+        #[SerializedName('issuebank')] private string $issueBank,
+        #[SerializedName('bankcountry')] private string $bankCountry,
+        #[SerializedName('orderdate')] private DateTimeInterface $orderDate,
+        #[SerializedName('orderstate')] private string $orderState,
+        #[SerializedName('responsecode')] private string $responseCode,
+        private ?string $message,
+        #[SerializedName('customermessage')] private ?string $customerMessage,
+        #[SerializedName('recommendation')] private ?string $recommendation,
+        #[SerializedName('approvalcode')] private ?string $approvalCode,
+        #[SerializedName('protocoltypename')] private ?string $protocolTypeName,
+        #[SerializedName('processingname')] private ?string $processingName,
+        #[SerializedName('operationtype')] private string $operationType,
+        #[SerializedName('operationdate')] private DateTimeInterface $operationDate,
+        #[SerializedName('authresult')] private ?string $authResult,
+        #[SerializedName('authrequired')] private ?bool $authRequired,
+        #[SerializedName('packetdate')] private DateTimeInterface $packetDate,
+        #[SerializedName('signature')] private ?string $signature,
+        #[SerializedName('checkvalue')] private string $checkValue,
+        #[SerializedName('slipno')] private ?string $slipNo,
     ) {
         ResponseCodeEnum::checkAllowedValue($responseCode);
         OperationTypeEnum::checkAllowedValue($operationType);
-
-        $this->merchantId = $merchantId;
-        $this->orderNumber = $orderNumber;
-        $this->billNumber = $billNumber;
-        $this->testMode = $testMode;
-        $this->orderComment = $orderComment;
-        $this->orderAmount = $orderAmount;
-        $this->orderCurrency = $orderCurrency;
-        $this->operationAmount = $operationAmount;
-        $this->operationCurrency = $operationCurrency;
-        $this->rate = $rate;
-        $this->firstname = $firstname;
-        $this->lastname = $lastname;
-        $this->middlename = $middlename;
-        $this->email = $email;
-        $this->clientIp = $clientIp;
-        $this->ipAddress = $ipAddress;
-        $this->meanTypeId = $meanTypeId;
-        $this->meanTypeName = $meanTypeName;
-        $this->meanSubtype = $meanSubtype;
-        $this->meanNumber = $meanNumber;
-        $this->cardHolder = $cardHolder;
-        $this->cardExpirationDate = $cardExpirationDate;
-        $this->issueBank = $issueBank;
-        $this->bankCountry = $bankCountry;
-        $this->orderDate = $orderDate;
-        $this->orderState = $orderState;
-        $this->responseCode = $responseCode;
-        $this->message = $message;
-        $this->customerMessage = $customerMessage;
-        $this->recommendation = $recommendation;
-        $this->approvalCode = $approvalCode;
-        $this->protocolTypeName = $protocolTypeName;
-        $this->processingName = $processingName;
-        $this->operationType = $operationType;
-        $this->operationDate = $operationDate;
-        $this->authResult = $authResult;
-        $this->authRequired = $authRequired;
-        $this->packetDate = $packetDate;
-        $this->signature = $signature;
-        $this->checkValue = $checkValue;
-        $this->slipNo = $slipNo;
     }
 
     public function getMerchantId(): string

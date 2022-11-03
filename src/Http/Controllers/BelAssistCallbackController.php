@@ -24,24 +24,13 @@ class BelAssistCallbackController extends AbstractController
 {
     public const CONFIRM_PAYMENT_ROUTE_NAME = 'belassist.confirmpayment';
 
-    private SignatureServiceContract $signatureService;
-    private CheckValueServiceContract $checkValueService;
-    private BelAssistConfig $config;
-    private ArrayObjectMapper $arrayObjectMapper;
-    private Dispatcher $dispatcher;
-
     public function __construct(
-        SignatureServiceContract $signatureService,
-        CheckValueServiceContract $checkValueService,
-        BelAssistConfig $config,
-        ArrayObjectMapper $arrayObjectMapper,
-        Dispatcher $dispatcher
+        private SignatureServiceContract $signatureService,
+        private CheckValueServiceContract $checkValueService,
+        private BelAssistConfig $config,
+        private ArrayObjectMapper $arrayObjectMapper,
+        private Dispatcher $dispatcher,
     ) {
-        $this->signatureService = $signatureService;
-        $this->checkValueService = $checkValueService;
-        $this->config = $config;
-        $this->arrayObjectMapper = $arrayObjectMapper;
-        $this->dispatcher = $dispatcher;
     }
 
     public function confirmPayment(Request $request): Response
@@ -67,10 +56,16 @@ class BelAssistCallbackController extends AbstractController
         if ($this->config->getMerchantId() !== $payment->getMerchantId()) {
             throw new WrongBelAssistMerchantIdException($payment->getMerchantId());
         }
-        if (!$this->signatureService->verify($payment, $payment->getSignature())) {
+        if (
+            $this->config->isCheckSignature()
+            && !$this->signatureService->verify($payment, $payment->getSignature())
+        ) {
             throw new WrongBelAssistSignatureException($payment->getSignature());
         }
-        if (!$this->checkValueService->verify($payment, $payment->getCheckValue())) {
+        if (
+            $this->config->isCheckCheckValue()
+            && !$this->checkValueService->verify($payment, $payment->getCheckValue())
+        ) {
             throw new WrongBelAssistCheckValueException($payment->getCheckValue());
         }
     }

@@ -10,41 +10,20 @@ use Sun\BelAssist\Service\SignatureInterface;
 
 class BelAssistPaymentDto implements CheckValueInterface, SignatureInterface, Arrayable, ResponseDtoInterface
 {
-    private string $order;
-    private float $amount;
-    private string $currency;
-    private int $delay;
-    private ?string $language;
-    private ?string $lastname;
-    private ?string $name;
-    private ?string $email;
-    private ?string $phone;
-    private ?string $urlReturn;
-
     public function __construct(
-        string $order,
-        float $amount,
-        string $currency,
-        int $delay = DelayEnum::ONE_STAGE,
-        ?string $language = null,
-        ?string $lastname = null,
-        ?string $name = null,
-        ?string $email = null,
-        ?string $phone = null,
-        ?string $urlReturn = null
+        private string $order,
+        private float $amount,
+        private string $currency,
+        private int $delay = DelayEnum::ONE_STAGE,
+        private ?string $language = null,
+        private ?string $lastname = null,
+        private ?string $name = null,
+        private ?string $email = null,
+        private ?string $phone = null,
+        private ?string $urlReturn = null,
     ) {
         DelayEnum::checkAllowedValue($delay);
         LanguageEnum::checkAllowedValue($language, true);
-        $this->order = $order;
-        $this->amount = $amount;
-        $this->currency = $currency;
-        $this->delay = $delay;
-        $this->language = $language;
-        $this->lastname = $lastname;
-        $this->name = $name;
-        $this->email = $email;
-        $this->phone = $phone;
-        $this->urlReturn = $urlReturn;
     }
 
     public function getOrder(): string

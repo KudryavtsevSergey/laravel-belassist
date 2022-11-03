@@ -20,15 +20,19 @@ class BelAssistServiceProvider extends ServiceProvider
         ], 'belassist-config');
 
         $config = $this->app->make(BelAssistConfig::class);
-        $this->app->bind(SignatureServiceContract::class, function () use ($config): SignatureServiceContract {
-            $privateKey = $this->makePrivateCryptKey();
-            $publicKey = $this->makePublicCryptKey();
-            return new SignatureService($config, $privateKey, $publicKey);
-        });
+        $this->app->bind(
+            SignatureServiceContract::class,
+            fn(): SignatureServiceContract => new SignatureService(
+                $config,
+                $this->makePrivateCryptKey(),
+                $this->makePublicCryptKey()
+            )
+        );
 
-        $this->app->bind(CheckValueServiceContract::class, function () use ($config): CheckValueServiceContract {
-            return new CheckValueService($config);
-        });
+        $this->app->bind(
+            CheckValueServiceContract::class,
+            fn(): CheckValueServiceContract => new CheckValueService($config)
+        );
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -44,19 +48,19 @@ class BelAssistServiceProvider extends ServiceProvider
         $this->app->singleton(Facade::FACADE_ACCESSOR, BelAssist::class);
     }
 
-    private function makePrivateCryptKey(): CryptKey
+    private function makePrivateCryptKey(): ?CryptKey
     {
         return $this->makeCryptKey(BelAssist::privateKeyPath());
     }
 
-    private function makePublicCryptKey(): CryptKey
+    private function makePublicCryptKey(): ?CryptKey
     {
         return $this->makeCryptKey(BelAssist::publicKeyPath());
     }
 
-    private function makeCryptKey(string $file): CryptKey
+    private function makeCryptKey(string $file): ?CryptKey
     {
         $key = sprintf('file://%s', $file);
-        return new CryptKey($key, null, false);
+        return is_file($key) ? new CryptKey($key, keyPermissionsCheck: false) : null;
     }
 }
