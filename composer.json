@@ -8,17 +8,14 @@
     }
   ],
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
     "ext-json": "*",
     "ext-simplexml": "*",
-    "symfony/serializer": "5.3.8",
-    "symfony/property-access": "5.3.8",
-    "phpdocumentor/reflection-docblock": "5.2.2",
-    "illuminate/http": "8.63",
-    "illuminate/support": "8.63",
-    "illuminate/events": "8.63",
-    "illuminate/routing": "8.63",
-    "guzzlehttp/guzzle": "7.2"
+    "symfony/serializer": "^6.1",
+    "symfony/property-access": "^6.1",
+    "phpdocumentor/reflection-docblock": "^5.3",
+    "guzzlehttp/guzzle": "^7.5"
   },
   "autoload": {
     "files": [

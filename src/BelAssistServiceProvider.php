@@ -2,6 +2,9 @@
 
 namespace Sun\BelAssist;
 
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use League\OAuth2\Server\CryptKey;
 use Sun\BelAssist\Service\CheckValueService;
@@ -11,29 +14,42 @@ use Sun\BelAssist\Service\SignatureServiceContract;
 
 class BelAssistServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
+    {
+        $this->registerRoutes();
+        $this->registerResources();
+        $this->registerPublishing();
+        $this->registerCommands();
+    }
+
+    protected function registerRoutes(): void
+    {
+        if (BelAssist::$registersRoutes) {
+            Route::group([
+                'prefix' => config('belassist.path', 'belassist'),
+                'namespace' => '\Sun\BelAssist\Http\Controllers',
+            ], function (): void {
+                $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+            });
+        }
+    }
+
+    protected function registerResources(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'belassist');
+    }
 
-        $this->publishes([
-            __DIR__ . '/../config/belassist.php' => config_path('belassist.php')
-        ], 'belassist-config');
+    protected function registerPublishing(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../config/belassist.php' => config_path('belassist.php')
+            ], 'belassist-config');
+        }
+    }
 
-        $config = $this->app->make(BelAssistConfig::class);
-        $this->app->bind(
-            SignatureServiceContract::class,
-            fn(): SignatureServiceContract => new SignatureService(
-                $config,
-                $this->makePrivateCryptKey(),
-                $this->makePublicCryptKey()
-            )
-        );
-
-        $this->app->bind(
-            CheckValueServiceContract::class,
-            fn(): CheckValueServiceContract => new CheckValueService($config)
-        );
-
+    protected function registerCommands(): void
+    {
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Console\KeysCommand::class,
@@ -41,11 +57,31 @@ class BelAssistServiceProvider extends ServiceProvider
         }
     }
 
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/belassist.php', 'belassist');
 
         $this->app->singleton(Facade::FACADE_ACCESSOR, BelAssist::class);
+
+        $this->app->singleton(BelAssistConfig::class, fn(
+            Container $container
+        ): BelAssistConfig => new BelAssistConfig(
+            $container->make(Repository::class)
+        ));
+
+        $this->app->singleton(SignatureServiceContract::class, fn(
+            Container $container
+        ): SignatureServiceContract => new SignatureService(
+            $container->make(BelAssistConfig::class),
+            $this->makePrivateCryptKey(),
+            $this->makePublicCryptKey()
+        ));
+
+        $this->app->singleton(CheckValueServiceContract::class, static fn(
+            Container $container
+        ): CheckValueServiceContract => new CheckValueService(
+            $container->make(BelAssistConfig::class)
+        ));
     }
 
     private function makePrivateCryptKey(): ?CryptKey

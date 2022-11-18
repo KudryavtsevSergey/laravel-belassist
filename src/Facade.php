@@ -3,7 +3,11 @@
 namespace Sun\BelAssist;
 
 use Illuminate\Support\Facades\Facade as IlluminateFacade;
+use Sun\BelAssist\Dto\ResponseDto\BelAssistPaymentDto;
 
+/**
+ * @method static string paymentLink(BelAssistPaymentDto $belAssistPaymentDto)
+ */
 class Facade extends IlluminateFacade
 {
     public const FACADE_ACCESSOR = 'BelAssist';
