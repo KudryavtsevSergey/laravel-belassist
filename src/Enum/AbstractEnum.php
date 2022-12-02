@@ -8,7 +8,7 @@ abstract class AbstractEnum
 {
     public static function checkAllowedValue(mixed $value, bool $isAllowNull = false): void
     {
-        $isAllow = $isAllowNull && is_null($value);
+        $isAllow = $isAllowNull && $value === null;
         if (!$isAllow && !static::isContainValue($value)) {
             throw self::invalidValue($value);
         }

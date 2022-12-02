@@ -2,8 +2,6 @@
 
 namespace Sun\BelAssist;
 
-use Sun\BelAssist\Dto\ResponseDto\BelAssistPaymentDto;
-use Sun\BelAssist\Http\Controllers\BelAssistPaymentController;
 use Sun\BelAssist\Service\BelAssistApiService;
 
 class BelAssist
@@ -14,11 +12,6 @@ class BelAssist
     public function apiService(): BelAssistApiService
     {
         return app(BelAssistApiService::class);
-    }
-
-    public function paymentLink(BelAssistPaymentDto $belAssistPaymentDto): string
-    {
-        return route(BelAssistPaymentController::PAY_ROUTE_NAME, $belAssistPaymentDto->toArray());
     }
 
     public static function loadKeysFrom($path): void

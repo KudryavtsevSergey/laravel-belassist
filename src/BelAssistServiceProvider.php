@@ -6,7 +6,6 @@ use Illuminate\Container\Container;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use League\OAuth2\Server\CryptKey;
 use Sun\BelAssist\Service\CheckValueService;
 use Sun\BelAssist\Service\CheckValueServiceContract;
 use Sun\BelAssist\Service\SignatureService;
@@ -63,40 +62,11 @@ class BelAssistServiceProvider extends ServiceProvider
 
         $this->app->singleton(Facade::FACADE_ACCESSOR, BelAssist::class);
 
-        $this->app->singleton(BelAssistConfig::class, fn(
-            Container $container
-        ): BelAssistConfig => new BelAssistConfig(
-            $container->make(Repository::class)
-        ));
+        $this->app->singleton(BelAssistConfig::class, static fn(
+            Container $container,
+        ): BelAssistConfig => new BelAssistConfig($container->make(Repository::class)));
 
-        $this->app->singleton(SignatureServiceContract::class, fn(
-            Container $container
-        ): SignatureServiceContract => new SignatureService(
-            $container->make(BelAssistConfig::class),
-            $this->makePrivateCryptKey(),
-            $this->makePublicCryptKey()
-        ));
-
-        $this->app->singleton(CheckValueServiceContract::class, static fn(
-            Container $container
-        ): CheckValueServiceContract => new CheckValueService(
-            $container->make(BelAssistConfig::class)
-        ));
-    }
-
-    private function makePrivateCryptKey(): ?CryptKey
-    {
-        return $this->makeCryptKey(BelAssist::privateKeyPath());
-    }
-
-    private function makePublicCryptKey(): ?CryptKey
-    {
-        return $this->makeCryptKey(BelAssist::publicKeyPath());
-    }
-
-    private function makeCryptKey(string $file): ?CryptKey
-    {
-        $key = sprintf('file://%s', $file);
-        return is_file($key) ? new CryptKey($key, keyPermissionsCheck: false) : null;
+        $this->app->singleton(SignatureServiceContract::class, SignatureService::class);
+        $this->app->singleton(CheckValueServiceContract::class, CheckValueService::class);
     }
 }

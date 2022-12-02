@@ -5,7 +5,6 @@ namespace Sun\BelAssist\Service;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
-use League\OAuth2\Server\CryptKey;
 use Sun\BelAssist\BelAssistConfig;
 
 class SignatureService implements SignatureServiceContract
@@ -18,9 +17,10 @@ class SignatureService implements SignatureServiceContract
 
     public function __construct(
         private BelAssistConfig $config,
-        ?CryptKey $privateKey,
-        ?CryptKey $publicKey,
     ) {
+        $privateKey = $config->makePrivateCryptKey();
+        $publicKey = $config->makePublicCryptKey();
+
         $this->signer = new Sha256();
         $this->privateKey = InMemory::plainText(
             $privateKey?->getKeyContents() ?? self::EMPTY,

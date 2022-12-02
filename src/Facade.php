@@ -3,7 +3,7 @@
 namespace Sun\BelAssist;
 
 use Illuminate\Support\Facades\Facade as IlluminateFacade;
-use Sun\BelAssist\Dto\ResponseDto\BelAssistPaymentDto;
+use Sun\BelAssist\Dto\RequestDto\BelAssistPaymentDto;
 
 /**
  * @method static string paymentLink(BelAssistPaymentDto $belAssistPaymentDto)

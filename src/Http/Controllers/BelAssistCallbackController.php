@@ -58,6 +58,7 @@ class BelAssistCallbackController extends AbstractController
         }
         if (
             $this->config->isCheckSignature()
+            && $payment->getSignature() !== null
             && !$this->signatureService->verify($payment, $payment->getSignature())
         ) {
             throw new WrongBelAssistSignatureException($payment->getSignature());

@@ -2,18 +2,23 @@
 
 namespace Sun\BelAssist;
 
-use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Contracts\Config\Repository;
+use League\OAuth2\Server\CryptKey;
 
 class BelAssistConfig
 {
     public function __construct(
-        private Config $config,
+        private Repository $config,
     ) {
     }
 
     public function getGateway(): ?string
     {
-        return $this->config->get('belassist.gateway');
+        $gateway = $this->config->get('belassist.gateway');
+        if ($gateway === null) {
+            return null;
+        }
+        return rtrim($gateway, '/');
     }
 
     public function getMerchantId(): ?string
@@ -44,5 +49,38 @@ class BelAssistConfig
     public function isCheckCheckValue(): bool
     {
         return $this->config->get('belassist.check_check_value');
+    }
+
+    public function makePrivateCryptKey(): ?CryptKey
+    {
+        return $this->makeCryptKey($this->getPrivateKey(), BelAssist::privateKeyPath());
+    }
+
+    public function makePublicCryptKey(): ?CryptKey
+    {
+        return $this->makeCryptKey($this->getPublicKey(), BelAssist::publicKeyPath());
+    }
+
+    private function getPublicKey(): ?string
+    {
+        return $this->config->get('belassist.public_key');
+    }
+
+    private function getPrivateKey(): ?string
+    {
+        return $this->config->get('belassist.private_key');
+    }
+
+    private function makeCryptKey(?string $key, string $file): ?CryptKey
+    {
+        $keyPath = $key !== null ? str_replace('\\n', "\n", $key) : null;
+        if ($keyPath === null) {
+            $filePath = sprintf('file://%s', $file);
+            if (is_file($filePath)) {
+                $keyPath = $filePath;
+            }
+        }
+
+        return $keyPath !== null ? new CryptKey($keyPath, keyPermissionsCheck: false) : null;
     }
 }
