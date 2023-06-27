@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\Dto\RequestDto;
 
 use DateTimeInterface;
@@ -8,8 +10,8 @@ use Sun\BelAssist\Enum\CardPaymentEnum;
 use Sun\BelAssist\Enum\DelayEnum;
 use Sun\BelAssist\Enum\LanguageEnum;
 use Sun\BelAssist\Enum\RecurringIndicatorEnum;
-use Sun\BelAssist\Service\CheckValueInterface;
-use Sun\BelAssist\Service\SignatureInterface;
+use Sun\BelAssist\Service\CheckValue\CheckValueInterface;
+use Sun\BelAssist\Service\Signature\SignatureInterface;
 use Symfony\Component\Serializer\Annotation\Context;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\Http\Controllers;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Sun\BelAssist\BelAssistConfig;
 use Sun\BelAssist\Dto\ResponseDto\OrderPaymentDto;
 use Sun\BelAssist\Events\BelAssistPaymentReceivedEvent;
@@ -15,28 +18,25 @@ use Sun\BelAssist\Exceptions\Request\WrongBelAssistSignatureException;
 use Sun\BelAssist\Mapper\ArrayObjectMapper;
 use Sun\BelAssist\ResponseGenerators\SuccessResponseGenerator;
 use Sun\BelAssist\Responses\BelAssistResponse;
-use Sun\BelAssist\Service\CheckValueServiceContract;
-use Sun\BelAssist\Service\SignatureServiceContract;
+use Sun\BelAssist\Service\CheckValue\CheckValueServiceInterface;
+use Sun\BelAssist\Service\Signature\SignatureServiceInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
-class BelAssistCallbackController extends AbstractController
+class BelAssistCallbackController extends Controller
 {
-    public const CONFIRM_PAYMENT_ROUTE_NAME = 'belassist.confirmpayment';
-
     public function __construct(
-        private SignatureServiceContract $signatureService,
-        private CheckValueServiceContract $checkValueService,
+        private SignatureServiceInterface $signatureService,
+        private CheckValueServiceInterface $checkValueService,
         private BelAssistConfig $config,
         private ArrayObjectMapper $arrayObjectMapper,
         private Dispatcher $dispatcher,
     ) {
     }
 
-    public function confirmPayment(Request $request): Response
+    public function __invoke(Request $request): Response
     {
         try {
-            /** @var OrderPaymentDto $payment */
             $payment = $this->arrayObjectMapper->deserialize($request->all(), OrderPaymentDto::class);
 
             $this->verifyPayment($payment);
@@ -56,12 +56,12 @@ class BelAssistCallbackController extends AbstractController
         if ($this->config->getMerchantId() !== $payment->getMerchantId()) {
             throw new WrongBelAssistMerchantIdException($payment->getMerchantId());
         }
+        $signature = $payment->getSignature();
         if (
             $this->config->isCheckSignature()
-            && $payment->getSignature() !== null
-            && !$this->signatureService->verify($payment, $payment->getSignature())
+            && (empty($signature) || !$this->signatureService->verify($payment, $signature))
         ) {
-            throw new WrongBelAssistSignatureException($payment->getSignature());
+            throw new WrongBelAssistSignatureException($signature);
         }
         if (
             $this->config->isCheckCheckValue()

@@ -1,9 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 use Sun\BelAssist\Http\Controllers\BelAssistCallbackController;
 
-Route::post('confirmpayment', [
-    'uses' => 'BelAssistCallbackController@confirmPayment',
-    'as' => BelAssistCallbackController::CONFIRM_PAYMENT_ROUTE_NAME,
-]);
+Route::post('confirmpayment', BelAssistCallbackController::class);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\Enum;
 
 class ResponseFormatEnum extends AbstractEnum

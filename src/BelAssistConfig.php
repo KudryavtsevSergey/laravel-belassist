@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist;
 
 use Illuminate\Contracts\Config\Repository;
@@ -12,13 +14,9 @@ class BelAssistConfig
     ) {
     }
 
-    public function getGateway(): ?string
+    public function getGateway(): string
     {
-        $gateway = $this->config->get('belassist.gateway');
-        if ($gateway === null) {
-            return null;
-        }
-        return rtrim($gateway, '/');
+        return rtrim($this->config->get('belassist.gateway'), '/');
     }
 
     public function getMerchantId(): ?string
@@ -36,19 +34,19 @@ class BelAssistConfig
         return $this->config->get('belassist.password');
     }
 
-    public function getSalt(): ?string
+    public function getSalt(): string
     {
         return $this->config->get('belassist.salt');
     }
 
     public function isCheckSignature(): bool
     {
-        return $this->config->get('belassist.check_signature');
+        return $this->config->get('belassist.check_signature', false);
     }
 
     public function isCheckCheckValue(): bool
     {
-        return $this->config->get('belassist.check_check_value');
+        return $this->config->get('belassist.check_check_value', false);
     }
 
     public function makePrivateCryptKey(): ?CryptKey

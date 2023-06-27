@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'gateway' => env('ASSIST_GATEWAY', 'https://pay169.paysec.by'),
     'merchant_id' => env('ASSIST_MERCHANT_ID'),

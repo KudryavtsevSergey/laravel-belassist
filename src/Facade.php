@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist;
 
 use Illuminate\Support\Facades\Facade as IlluminateFacade;
-use Sun\BelAssist\Dto\RequestDto\BelAssistPaymentDto;
+use Sun\BelAssist\Service\BelAssistApiService;
 
 /**
- * @method static string paymentLink(BelAssistPaymentDto $belAssistPaymentDto)
+ * @method static BelAssistApiService apiService()
+ * @method static void loadKeysFrom(string|null $path)
+ * @method static void ignoreRoutes()
  */
 class Facade extends IlluminateFacade
 {

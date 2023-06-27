@@ -1,22 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist;
 
-use Illuminate\Container\Container;
-use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Sun\BelAssist\Service\CheckValueService;
-use Sun\BelAssist\Service\CheckValueServiceContract;
-use Sun\BelAssist\Service\SignatureService;
-use Sun\BelAssist\Service\SignatureServiceContract;
+use Sun\BelAssist\Service\CheckValue\CheckValueService;
+use Sun\BelAssist\Service\CheckValue\CheckValueServiceInterface;
+use Sun\BelAssist\Service\Signature\SignatureService;
+use Sun\BelAssist\Service\Signature\SignatureServiceInterface;
 
 class BelAssistServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
         $this->registerRoutes();
-        $this->registerResources();
         $this->registerPublishing();
         $this->registerCommands();
     }
@@ -26,16 +25,10 @@ class BelAssistServiceProvider extends ServiceProvider
         if (BelAssist::$registersRoutes) {
             Route::group([
                 'prefix' => config('belassist.path', 'belassist'),
-                'namespace' => '\Sun\BelAssist\Http\Controllers',
             ], function (): void {
                 $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
             });
         }
-    }
-
-    protected function registerResources(): void
-    {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'belassist');
     }
 
     protected function registerPublishing(): void
@@ -62,11 +55,7 @@ class BelAssistServiceProvider extends ServiceProvider
 
         $this->app->singleton(Facade::FACADE_ACCESSOR, BelAssist::class);
 
-        $this->app->singleton(BelAssistConfig::class, static fn(
-            Container $container,
-        ): BelAssistConfig => new BelAssistConfig($container->make(Repository::class)));
-
-        $this->app->singleton(SignatureServiceContract::class, SignatureService::class);
-        $this->app->singleton(CheckValueServiceContract::class, CheckValueService::class);
+        $this->app->singleton(SignatureServiceInterface::class, SignatureService::class);
+        $this->app->singleton(CheckValueServiceInterface::class, CheckValueService::class);
     }
 }

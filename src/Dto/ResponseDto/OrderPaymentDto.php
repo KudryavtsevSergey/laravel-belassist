@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\Dto\ResponseDto;
 
 use DateTimeInterface;
 use Sun\BelAssist\Enum\OperationTypeEnum;
 use Sun\BelAssist\Enum\ResponseCodeEnum;
-use Sun\BelAssist\Service\CheckValueInterface;
-use Sun\BelAssist\Service\SignatureInterface;
+use Sun\BelAssist\Service\CheckValue\CheckValueInterface;
+use Sun\BelAssist\Service\Signature\SignatureInterface;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class OrderPaymentDto implements SignatureInterface, CheckValueInterface, ResponseDtoInterface

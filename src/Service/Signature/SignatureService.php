@@ -1,13 +1,16 @@
 <?php
 
-namespace Sun\BelAssist\Service;
+declare(strict_types=1);
+
+namespace Sun\BelAssist\Service\Signature;
 
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Sun\BelAssist\BelAssistConfig;
+use Sun\BelAssist\Exceptions\Request\WrongBelAssistSignatureException;
 
-class SignatureService implements SignatureServiceContract
+class SignatureService implements SignatureServiceInterface
 {
     private const EMPTY = 'empty';
 
@@ -23,11 +26,11 @@ class SignatureService implements SignatureServiceContract
 
         $this->signer = new Sha256();
         $this->privateKey = InMemory::plainText(
-            $privateKey?->getKeyContents() ?? self::EMPTY,
+            $privateKey?->getKeyContents() ?: self::EMPTY,
             $privateKey?->getPassPhrase() ?? ''
         );
         $this->publicKey = InMemory::plainText(
-            $publicKey?->getKeyContents() ?? self::EMPTY,
+            $publicKey?->getKeyContents() ?: self::EMPTY,
             $publicKey?->getPassPhrase() ?? ''
         );
     }
@@ -41,10 +44,14 @@ class SignatureService implements SignatureServiceContract
     public function verify(SignatureInterface $signature, string $expected): bool
     {
         $payload = $this->generatePayload($signature);
-        $expected = base64_decode($expected);
+        $expected = base64_decode($expected, true) ?: throw new WrongBelAssistSignatureException($expected);
         return $this->signer->verify($expected, $payload, $this->publicKey);
     }
 
+    /**
+     * @param SignatureInterface $signature
+     * @return non-empty-string
+     */
     private function generatePayload(SignatureInterface $signature): string
     {
         $value = implode(';', [

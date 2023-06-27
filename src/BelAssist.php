@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist;
 
 use Sun\BelAssist\Service\BelAssistApiService;
@@ -14,7 +16,7 @@ class BelAssist
         return app(BelAssistApiService::class);
     }
 
-    public static function loadKeysFrom($path): void
+    public static function loadKeysFrom(?string $path): void
     {
         static::$keyPath = $path;
     }
@@ -34,7 +36,7 @@ class BelAssist
         return self::keyPath('assist-private.key');
     }
 
-    private static function keyPath($file): string
+    private static function keyPath(string $file): string
     {
         $file = ltrim($file, '/\\');
 

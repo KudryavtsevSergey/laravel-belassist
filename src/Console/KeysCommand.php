@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\Console;
 
 use Illuminate\Console\Command;
@@ -24,8 +26,8 @@ class KeysCommand extends Command
         if ((file_exists($publicKey) || file_exists($privateKey)) && !$this->option('force')) {
             $this->error('Encryption keys already exist. Use the --force option to overwrite them.');
         } else {
-            $key = RSA::createKey($this->input ? (int) $this->option('length') : 1024);
-            file_put_contents($publicKey, (string)$key->getPublicKey());
+            $key = RSA::createKey((int)$this->option('length'));
+            file_put_contents($publicKey, $key->getPublicKey());
             file_put_contents($privateKey, (string)$key);
 
             $this->info('Encryption keys generated successfully.');

@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\ResponseGenerators;
 
 use SimpleXMLElement;
+use Sun\BelAssist\Enum\FirstResponseCodeEnum;
+use Sun\BelAssist\Enum\SecondResponseCodeEnum;
 use Sun\BelAssist\Exceptions\XmlGenerationException;
 
 abstract class AbstractResponseGenerator
@@ -11,6 +15,8 @@ abstract class AbstractResponseGenerator
         private int $firstCode,
         private int $secondCode,
     ) {
+        FirstResponseCodeEnum::checkAllowedValue($firstCode);
+        SecondResponseCodeEnum::checkAllowedValue($secondCode);
     }
 
     public function generateXml(): string
@@ -27,8 +33,8 @@ abstract class AbstractResponseGenerator
     protected function createXml(): SimpleXMLElement
     {
         $xml = new SimpleXMLElement('<pushpaymentresult />');
-        $xml->addAttribute('firstcode', $this->firstCode);
-        $xml->addAttribute('secondcode', $this->secondCode);
+        $xml->addAttribute('firstcode', (string)$this->firstCode);
+        $xml->addAttribute('secondcode', (string)$this->secondCode);
         return $xml;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\Exceptions\Request;
 
 use Illuminate\Contracts\Support\Responsable;

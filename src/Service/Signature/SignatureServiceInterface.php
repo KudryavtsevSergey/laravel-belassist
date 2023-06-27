@@ -1,8 +1,10 @@
 <?php
 
-namespace Sun\BelAssist\Service;
+declare(strict_types=1);
 
-interface SignatureServiceContract
+namespace Sun\BelAssist\Service\Signature;
+
+interface SignatureServiceInterface
 {
     public function generate(SignatureInterface $signature): string;
 

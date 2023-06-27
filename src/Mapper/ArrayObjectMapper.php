@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\Mapper;
 
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -47,12 +49,22 @@ class ArrayObjectMapper
     public function serialize(RequestDtoInterface $model): array
     {
         try {
-            return $this->serializer->normalize($model);
+            $data = $this->serializer->normalize($model);
+            if (!is_array($data)) {
+                throw new InternalError('Model was not normalized');
+            }
+            return $data;
         } catch (ExceptionInterface $e) {
             throw new InternalError('Error normalize model to array', $e);
         }
     }
 
+    /**
+     * @template T of ResponseDtoInterface
+     * @param array $data
+     * @param class-string<T> $type
+     * @return T
+     */
     public function deserialize(array $data, string $type): ResponseDtoInterface
     {
         try {

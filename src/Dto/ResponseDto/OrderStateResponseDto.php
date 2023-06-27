@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\Dto\ResponseDto;
 
 use DateTimeInterface;
 use Sun\BelAssist\Enum\BelAssistCurrencyEnum;
 use Sun\BelAssist\Enum\OrderStateEnum;
-use Sun\BelAssist\Service\CheckValueInterface;
+use Sun\BelAssist\Service\CheckValue\CheckValueInterface;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class OrderStateResponseDto implements CheckValueInterface, ResponseDtoInterface

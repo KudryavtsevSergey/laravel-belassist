@@ -1,8 +1,10 @@
 <?php
 
-namespace Sun\BelAssist\Service;
+declare(strict_types=1);
 
-interface SignatureInterface
+namespace Sun\BelAssist\Service\CheckValue;
+
+interface CheckValueInterface
 {
     public function getOrder(): string;
 

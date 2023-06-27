@@ -1,10 +1,12 @@
 <?php
 
-namespace Sun\BelAssist\Service;
+declare(strict_types=1);
+
+namespace Sun\BelAssist\Service\CheckValue;
 
 use Sun\BelAssist\BelAssistConfig;
 
-class CheckValueService implements CheckValueServiceContract
+class CheckValueService implements CheckValueServiceInterface
 {
     public function __construct(
         private BelAssistConfig $config,
@@ -22,8 +24,8 @@ class CheckValueService implements CheckValueServiceContract
         return strtoupper(md5(strtoupper(md5($this->config->getSalt()) . md5($value))));
     }
 
-    public function verify(CheckValueInterface $checkValue, string $value): bool
+    public function verify(CheckValueInterface $checkValue, string $expected): bool
     {
-        return $this->generate($checkValue) === $value;
+        return $this->generate($checkValue) === $expected;
     }
 }

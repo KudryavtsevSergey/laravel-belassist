@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BelAssist\Service;
 
 use GuzzleHttp\Client;
@@ -28,6 +30,13 @@ class BelAssistHttpClientService
         ]);
     }
 
+    /**
+     * @template T of ResponseDtoInterface
+     * @param string $method
+     * @param RequestDtoInterface $requestDto
+     * @param class-string<T> $responseType
+     * @return T
+     */
     public function request(string $method, RequestDtoInterface $requestDto, string $responseType): ResponseDtoInterface
     {
         $response = $this->rawRequest($method, array_merge($this->arrayObjectMapper->serialize($requestDto), [
@@ -55,6 +64,14 @@ class BelAssistHttpClientService
 
     private function encodeResponse(string $body): array
     {
-        return json_decode(json_encode((array)simplexml_load_string($body)), true);
+        $data = json_decode(
+            json_encode((array)simplexml_load_string($body), JSON_THROW_ON_ERROR),
+            true,
+            flags: JSON_THROW_ON_ERROR
+        );
+        if (!is_array($data)) {
+            throw new InternalError('Response was not decoded');
+        }
+        return $data;
     }
 }
