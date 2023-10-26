@@ -9,17 +9,17 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class OrderStateRequestDto implements RequestDtoInterface
 {
     public function __construct(
-        #[SerializedName('Ordernumber')] private string $orderNumber,
-        #[SerializedName('StartYear')] private ?string $startYear = null,
-        #[SerializedName('StartMonth')] private ?string $startMonth = null,
-        #[SerializedName('StartDay')] private ?string $startDay = null,
-        #[SerializedName('StartHour')] private ?string $startHour = null,
-        #[SerializedName('StartMin')] private ?string $startMin = null,
-        #[SerializedName('EndYear')] private ?string $endYear = null,
-        #[SerializedName('EndMonth')] private ?string $endMonth = null,
-        #[SerializedName('EndDay')] private ?string $endDay = null,
-        #[SerializedName('EndHour')] private ?string $endHour = null,
-        #[SerializedName('EndMin')] private ?string $endMin = null,
+        #[SerializedName('Ordernumber')] private readonly string $orderNumber,
+        #[SerializedName('StartYear')] private readonly ?string $startYear = null,
+        #[SerializedName('StartMonth')] private readonly ?string $startMonth = null,
+        #[SerializedName('StartDay')] private readonly ?string $startDay = null,
+        #[SerializedName('StartHour')] private readonly ?string $startHour = null,
+        #[SerializedName('StartMin')] private readonly ?string $startMin = null,
+        #[SerializedName('EndYear')] private readonly ?string $endYear = null,
+        #[SerializedName('EndMonth')] private readonly ?string $endMonth = null,
+        #[SerializedName('EndDay')] private readonly ?string $endDay = null,
+        #[SerializedName('EndHour')] private readonly ?string $endHour = null,
+        #[SerializedName('EndMin')] private readonly ?string $endMin = null,
     ) {
     }
 

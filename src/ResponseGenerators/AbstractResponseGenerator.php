@@ -12,8 +12,8 @@ use Sun\BelAssist\Exceptions\XmlGenerationException;
 abstract class AbstractResponseGenerator
 {
     public function __construct(
-        private int $firstCode,
-        private int $secondCode,
+        private readonly int $firstCode,
+        private readonly int $secondCode,
     ) {
         FirstResponseCodeEnum::checkAllowedValue($firstCode);
         SecondResponseCodeEnum::checkAllowedValue($secondCode);

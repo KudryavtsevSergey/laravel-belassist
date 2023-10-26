@@ -11,7 +11,7 @@ use Sun\BelAssist\ResponseGenerators\AbstractResponseGenerator;
 class BelAssistResponse implements Responsable
 {
     public function __construct(
-        private AbstractResponseGenerator $generator,
+        private readonly AbstractResponseGenerator $generator,
     ) {
     }
 
@@ -19,7 +19,7 @@ class BelAssistResponse implements Responsable
     {
         $xml = $this->generator->generateXml();
 
-        return new Response($xml, Response::HTTP_OK, [
+        return new Response($xml, headers: [
             'Content-Type' => 'application/xml',
         ]);
     }

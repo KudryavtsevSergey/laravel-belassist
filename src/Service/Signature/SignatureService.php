@@ -19,7 +19,7 @@ class SignatureService implements SignatureServiceInterface
     private Key $publicKey;
 
     public function __construct(
-        private BelAssistConfig $config,
+        private readonly BelAssistConfig $config,
     ) {
         $privateKey = $config->makePrivateCryptKey();
         $publicKey = $config->makePublicCryptKey();

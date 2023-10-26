@@ -13,13 +13,13 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class OrderStateResponseDto implements CheckValueInterface, ResponseDtoInterface
 {
     public function __construct(
-        #[SerializedName('billnumber')] private string $billNumber,
-        #[SerializedName('Ordernumber')] private string $orderNumber,
-        #[SerializedName('orderstate')] private string $orderState,
-        #[SerializedName('orderamount')] private float $orderAmount,
-        #[SerializedName('ordercurrency')] private string $orderCurrency,
-        #[SerializedName('packetdate')] private DateTimeInterface $packetDate,
-        #[SerializedName('checkvalue')] private string $checkValue,
+        #[SerializedName('billnumber')] private readonly string $billNumber,
+        #[SerializedName('Ordernumber')] private readonly string $orderNumber,
+        #[SerializedName('orderstate')] private readonly string $orderState,
+        #[SerializedName('orderamount')] private readonly float $orderAmount,
+        #[SerializedName('ordercurrency')] private readonly string $orderCurrency,
+        #[SerializedName('packetdate')] private readonly DateTimeInterface $packetDate,
+        #[SerializedName('checkvalue')] private readonly string $checkValue,
     ) {
         OrderStateEnum::checkAllowedValue($orderState);
         BelAssistCurrencyEnum::checkAllowedValue($orderCurrency);

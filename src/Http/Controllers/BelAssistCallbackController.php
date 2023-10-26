@@ -26,11 +26,11 @@ use Throwable;
 class BelAssistCallbackController extends Controller
 {
     public function __construct(
-        private SignatureServiceInterface $signatureService,
-        private CheckValueServiceInterface $checkValueService,
-        private BelAssistConfig $config,
-        private ArrayObjectMapper $arrayObjectMapper,
-        private Dispatcher $dispatcher,
+        private readonly SignatureServiceInterface $signatureService,
+        private readonly CheckValueServiceInterface $checkValueService,
+        private readonly BelAssistConfig $config,
+        private readonly ArrayObjectMapper $arrayObjectMapper,
+        private readonly Dispatcher $dispatcher,
     ) {
     }
 

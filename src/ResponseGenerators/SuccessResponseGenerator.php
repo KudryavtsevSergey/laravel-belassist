@@ -12,8 +12,8 @@ use Sun\BelAssist\Enum\SecondResponseCodeEnum;
 class SuccessResponseGenerator extends AbstractResponseGenerator
 {
     public function __construct(
-        private string $billNumber,
-        private DateTimeInterface $packetDate,
+        private readonly string $billNumber,
+        private readonly DateTimeInterface $packetDate,
     ) {
         parent::__construct(FirstResponseCodeEnum::SUCCESS, SecondResponseCodeEnum::NO_ADDITIONAL_INFORMATION);
     }

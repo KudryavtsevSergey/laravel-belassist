@@ -17,11 +17,11 @@ use Sun\BelAssist\Service\Signature\SignatureServiceInterface;
 class BelAssistApiService
 {
     public function __construct(
-        private BelAssistHttpClientService $httpClient,
-        private BelAssistConfig $config,
-        private CheckValueServiceInterface $checkValueService,
-        private SignatureServiceInterface $signatureService,
-        private ArrayObjectMapper $arrayObjectMapper,
+        private readonly BelAssistHttpClientService $httpClient,
+        private readonly BelAssistConfig $config,
+        private readonly CheckValueServiceInterface $checkValueService,
+        private readonly SignatureServiceInterface $signatureService,
+        private readonly ArrayObjectMapper $arrayObjectMapper,
     ) {
     }
 

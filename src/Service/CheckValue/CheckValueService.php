@@ -9,7 +9,7 @@ use Sun\BelAssist\BelAssistConfig;
 class CheckValueService implements CheckValueServiceInterface
 {
     public function __construct(
-        private BelAssistConfig $config,
+        private readonly BelAssistConfig $config,
     ) {
     }
 

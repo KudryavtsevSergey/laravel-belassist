@@ -10,7 +10,7 @@ use League\OAuth2\Server\CryptKey;
 class BelAssistConfig
 {
     public function __construct(
-        private Repository $config,
+        private readonly Repository $config,
     ) {
     }
 

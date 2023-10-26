@@ -22,8 +22,8 @@ class BelAssistHttpClientService
     private Client $client;
 
     public function __construct(
-        private ArrayObjectMapper $arrayObjectMapper,
-        private BelAssistConfig $config
+        private readonly ArrayObjectMapper $arrayObjectMapper,
+        private readonly BelAssistConfig $config
     ) {
         $this->client = new Client([
             'base_uri' => $config->getGateway(),
